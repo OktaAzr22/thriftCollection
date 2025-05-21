@@ -8,11 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
-    public function index()
-    {
-        $brands = Brand::latest()->get();
-        return view('brands.index', compact('brands'));
+   public function index(Request $request)
+{
+    $query = Brand::query();
+
+    if ($request->has('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    $brands = $query->paginate(4)->withQueryString();
+
+    return view('brands.index', compact('brands'));
+}
+
 
     public function store(Request $request)
     {
