@@ -8,37 +8,74 @@
     @stack('styles')
 </head>
 <body class="bg-gray-100 text-gray-800">
-
-    {{-- Fixed Sidebar --}}
-    <aside class="fixed top-0 left-0 w-64 h-screen bg-white shadow-md z-10">
-        <div class="p-6 border-b">
-            <h1 class="text-2xl font-bold text-blue-600">MyLaravelApp</h1>
-        </div>
-        <nav class="p-4 space-y-2">
-            <a href="{{ url('/brand') }}" class="block px-4 py-2 rounded hover:bg-blue-100 {{ request()->is('brand') ? 'bg-blue-200 font-semibold' : '' }}">
-                Brand
-            </a>
-            <a href="{{ url('/kategori') }}" class="block px-4 py-2 rounded hover:bg-blue-100 {{ request()->is('kategori') ? 'bg-blue-200 font-semibold' : '' }}">
-                Kategori
-            </a>
+   <!-- Sidebar fixed -->
+    <aside class="fixed top-0 left-0 h-screen w-64 bg-white shadow-lg overflow-y-auto">
+        <div class="p-4 font-bold text-xl border-b">My Sidebar</div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Dashboard</a></li>
+                <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Menu 1</a></li>
+                <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Menu 2</a></li>
+                <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Menu 3</a></li>
+            </ul>
         </nav>
     </aside>
 
-    {{-- Content --}}
-    <div class="pl-64 min-h-screen">
-        <main class="p-8">
-            {{-- Flash message --}}
-            @if(session('success'))
-                <div class="mb-4 px-4 py-2 bg-green-100 border border-green-400 text-green-700 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @yield('content')
-        </main>
+    <!-- Main Content -->
+    <div class="ml-64 p-6">
+       
+        @yield('content')
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
+    <script>
+      Swal.fire({
+         icon: 'success',
+         title: 'Berhasil!',
+         text: '{{ session("success") }}',
+         timer: 2000,
+         showConfirmButton: false
+      });
+    </script>
+    @endif
+    @if (session('error'))
+    <script>
+      Swal.fire({
+         icon: 'error',
+         title: 'Gagal!',
+         text: '{{ session("error") }}',
+         timer: 2000,
+         showConfirmButton: false
+      });
+    </script>
+    @endif
+    <script>
+      // Konfirmasi hapus pakai SweetAlert
+      document.addEventListener('DOMContentLoaded', function () {
+         const forms = document.querySelectorAll('.form-delete');
 
+         forms.forEach(form => {
+               form.addEventListener('submit', function (e) {
+                  e.preventDefault();
+
+                  Swal.fire({
+                     title: 'Yakin mau hapus?',
+                     text: "Data akan hilang permanen!",
+                     icon: 'warning',
+                     showCancelButton: true,
+                     confirmButtonColor: '#e3342f',
+                     cancelButtonColor: '#6c757d',
+                     confirmButtonText: 'Ya, hapus!',
+                     cancelButtonText: 'Batal'
+                  }).then((result) => {
+                     if (result.isConfirmed) {
+                           form.submit();
+                     }
+                  });
+               });
+         });
+      });
+    </script>
     @stack('scripts')
 </body>
-
 </html>

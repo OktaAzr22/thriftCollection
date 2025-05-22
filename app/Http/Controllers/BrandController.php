@@ -16,7 +16,7 @@ class BrandController extends Controller
         $query->where('name', 'like', '%' . $request->search . '%');
     }
 
-    $brands = $query->paginate(4)->withQueryString();
+     $brands = $query->get();
 
     return view('brands.index', compact('brands'));
 }
