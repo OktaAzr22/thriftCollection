@@ -13,9 +13,3 @@ route::resource('brands', BrandController::class)->except(['create','edit', 'sho
 
 
 
-
-Route::get('/kategori', function () {
-    return view('kategori.kategori2');
-});
-
-
