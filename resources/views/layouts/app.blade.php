@@ -13,9 +13,9 @@
         <div class="p-4 font-bold text-xl border-b">My Sidebar</div>
         <nav class="p-4">
             <ul class="space-y-2">
-                <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Dashboard</a></li>
-                <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Menu 1</a></li>
-                <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Menu 2</a></li>
+                <li><a href="{{ url('/') }}" class="block p-2 rounded hover:bg-gray-200">Dashboard</a></li>
+                <li><a href="{{ route('brands.index') }}" class="block p-2 rounded hover:bg-gray-200">Brand</a></li>
+                <li><a href="" class="block p-2 rounded hover:bg-gray-200">Kategori</a></li>
                 <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Menu 3</a></li>
             </ul>
         </nav>
