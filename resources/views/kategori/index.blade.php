@@ -15,6 +15,8 @@
 
 @section('content')
 <x-alert />
+<x-breadcrumb :items="autoBreadcrumb()" />
+
 
 <h1 class="text-2xl font-bold text-gray-800 mb-6">
     <i class="fas fa-tags mr-2"></i> Manajemen Kategori

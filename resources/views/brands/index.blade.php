@@ -36,6 +36,8 @@
 
 @section('content')
 <x-alert />
+<x-breadcrumb :items="autoBreadcrumb()" />
+
 <h1 class="text-2xl font-bold mb-4">Brand List</h1>
 {{-- Form Tambah Brand --}}
 <div class="bg-white rounded-lg shadow fade-in p-6 mb-6 relative" id="form-produk-wrapper">

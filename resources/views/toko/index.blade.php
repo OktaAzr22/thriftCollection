@@ -36,6 +36,8 @@
 
 <div class=" bg-white p-6 rounded shadow">
   <h1 class="text-2xl font-bold mb-4">Manajemen Toko</h1>
+  <x-breadcrumb :items="autoBreadcrumb()" />
+
   {{-- FILTER PENCARIAN --}}
    <form method="GET" action="{{ route('toko.index') }}" class="mb-6 w-full max-w-md mx-auto">
       <div class="relative flex items-center">

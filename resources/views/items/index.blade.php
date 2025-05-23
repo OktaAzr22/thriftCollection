@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<x-breadcrumb :items="autoBreadcrumb()" />
+
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">Daftar Item</h1>

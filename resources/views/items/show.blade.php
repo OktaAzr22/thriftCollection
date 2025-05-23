@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<x-breadcrumb :items="autoBreadcrumb()" />
+
 <div class="max-w-5xl mx-auto px-4 py-10">
    <a href="{{ route('items.index') }}" class="inline-flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-blue-500 mb-4">
         <i class="fas fa-arrow-left mr-2"></i> Kembali ke daftar

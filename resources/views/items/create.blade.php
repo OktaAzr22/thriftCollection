@@ -5,6 +5,8 @@
 @endpush
 
 @section('content')
+<x-breadcrumb :items="autoBreadcrumb()" />
+
 <x-alert />
 <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
     @csrf
