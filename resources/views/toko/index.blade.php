@@ -2,9 +2,56 @@
 
 @push('styles')
 <style>
-  
+  @keyframes slideIn {
+    0%   { opacity: 0; transform: translateX(100%); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slideOut {
+    0%   { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(100%); }
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-out {
+    animation: slideOut 0.5s ease-in forwards;
+  }
+
+  .animate-progress {
+    animation: progressBar 4s linear forwards;
+  }
+
+  @keyframes progressBar {
+    from { width: 100%; }
+    to   { width: 0%; }
+  }
 </style>
 @endpush
+@push('alerts')
+  @if(session('success') && session('source') !== 'create')
+  <div id="customAlert" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded shadow-lg flex items-center space-x-3 z-50 animate-slide-in pointer-events-auto w-[300px]">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2l4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span class="text-sm break-words">{{ session('success') }}</span>
+    <div class="absolute bottom-0 left-0 h-1 bg-green-700 animate-progress w-full"></div>
+  </div>
+  @endif
+
+  @if(session('error'))
+  <div class="fixed top-4 right-4 bg-red-500 text-white px-4 py-3 rounded shadow-lg z-50 flex items-center space-x-3 animate-slide-in w-[300px]">
+    <i class="fas fa-exclamation-circle"></i>
+    <span class="text-sm">{{ session('error') }}</span>
+    <div class="absolute bottom-0 left-0 h-1 bg-red-700 animate-progress w-full"></div>
+  </div>
+  @endif
+@endpush
+
+
+
 
 @section('content')
 <div class=" bg-white p-6 rounded shadow">
@@ -59,6 +106,7 @@
    <hr>
    {{-- DAFTAR TOKO --}}
   <h2 class="text-2xl font-semibold mb-4 text-gray-800">Daftar Toko</h2>
+
 
 <div class="overflow-x-auto bg-white shadow-md rounded-lg">
   <table class="min-w-full text-sm text-gray-700">
@@ -164,6 +212,20 @@
 @endsection
 
 @push('scripts')
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const alert = document.getElementById('customAlert');
+    if (alert) {
+      setTimeout(() => {
+        alert.classList.remove('animate-slide-in');
+        alert.classList.add('animate-slide-out');
+        setTimeout(() => {
+          alert.remove();
+        }, 500); // waktu animasi slide out
+      }, 4000);
+    }
+  });
+</script>
 <script>
    function clearSearch() {
     window.location.href = "{{ route('toko.index') }}";

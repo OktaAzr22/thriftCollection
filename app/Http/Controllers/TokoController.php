@@ -30,7 +30,10 @@ return view('toko.index', compact('tokos', 'totalToko'));
 
     Toko::create($request->all());
 
-    return redirect()->route('toko.index')->with('success', 'Toko berhasil ditambahkan.');
+    return redirect()->route('toko.index')
+    ->with('success', 'Toko berhasil ditambahkan.')
+    ->with('source', 'create');
+
 }
 
     public function update(Request $request, Toko $toko)
@@ -43,13 +46,19 @@ return view('toko.index', compact('tokos', 'totalToko'));
 
     $toko->update($request->all());
 
-    return redirect()->route('toko.index')->with('success', 'Toko berhasil diperbarui.');
+    return redirect()->route('toko.index')
+    ->with('success', 'Toko berhasil diperbarui.')
+    ->with('source', 'update');
+
 }
 
    public function destroy(Toko $toko)
 {
     $toko->delete();
 
-    return redirect()->route('toko.index')->with('success', 'Toko berhasil dihapus.');
+    return redirect()->route('toko.index')
+    ->with('success', 'Toko berhasil dihapus.')
+    ->with('source', 'delete');
+
 }
 }

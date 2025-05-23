@@ -8,6 +8,7 @@
     @stack('styles')
 </head>
 <body class="bg-gray-100 text-gray-800">
+    @stack('alerts')
    <!-- Sidebar fixed -->
     <aside class="fixed top-0 left-0 h-screen w-64 bg-white shadow-lg overflow-y-auto">
         <div class="p-4 font-bold text-xl border-b">My Sidebar</div>
@@ -27,17 +28,20 @@
         @yield('content')
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if (session('success'))
-    <script>
-      Swal.fire({
-         icon: 'success',
-         title: 'Berhasil!',
-         text: '{{ session("success") }}',
-         timer: 2000,
-         showConfirmButton: false
-      });
-    </script>
-    @endif
+   @push('scripts')
+@if(session('success') && session('source') === 'create')
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        timer: 2000,
+        showConfirmButton: false,
+    });
+</script>
+@endif
+@endpush
+
     @if (session('error'))
     <script>
       Swal.fire({
