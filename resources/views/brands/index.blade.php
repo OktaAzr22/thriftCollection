@@ -124,7 +124,7 @@
          <button class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded flex items-center justify-center text-sm" onclick="openModal('{{ $brand->id }}')">
             <i class="fas fa-pen"></i>
          </button>
-         <form action="{{ route('brands.destroy', $brand) }}" method="POST" class="form-delete">
+         <form action="{{ route('brands.destroy', $brand) }}" method="POST" data-jenis="Brand" class="form-delete">
             @csrf @method('DELETE')
             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white p-2 rounded flex items-center justify-center text-sm">
                <i class="fas fa-trash"></i>

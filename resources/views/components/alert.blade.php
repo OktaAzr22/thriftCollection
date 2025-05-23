@@ -35,30 +35,30 @@
 
 @once
 <style>
-@keyframes slide-in { 0% {opacity:0;transform:translateX(100%)} 100% {opacity:1;transform:translateX(0)} }
-@keyframes slide-out{ 0% {opacity:1;transform:translateX(0)} 100% {opacity:0;transform:translateX(100%)} }
-.animate-slide-in { animation: slide-in 0.35s ease-out forwards }
-.animate-slide-out { animation: slide-out 0.35s ease-in forwards }
+    @keyframes slide-in { 0% {opacity:0;transform:translateX(100%)} 100% {opacity:1;transform:translateX(0)} }
+    @keyframes slide-out{ 0% {opacity:1;transform:translateX(0)} 100% {opacity:0;transform:translateX(100%)} }
+        .animate-slide-in { animation: slide-in 0.35s ease-out forwards }
+        .animate-slide-out { animation: slide-out 0.35s ease-in forwards }
 </style>
 @endonce
 
 <script>
-(() => {
-    const box = document.getElementById('{{ $id }}');
-    const bar = document.getElementById('{{ $id }}-bar');
-    const t   = {{ $timeout }};
+    (() => {
+        const box = document.getElementById('{{ $id }}');
+        const bar = document.getElementById('{{ $id }}-bar');
+        const t   = {{ $timeout }};
 
-    // Shrink bar
-    setTimeout(() => {
-        bar.style.transition = `width ${t}ms linear`;
-        bar.style.width = '0%';
-    }, 10);
+        // Shrink bar
+        setTimeout(() => {
+            bar.style.transition = `width ${t}ms linear`;
+            bar.style.width = '0%';
+        }, 10);
 
-    // Auto dismiss
-    setTimeout(() => {
-        box.classList.replace('animate-slide-in','animate-slide-out');
-        setTimeout(() => box.remove(), 350);
-    }, t);
-})();
+        // Auto dismiss
+        setTimeout(() => {
+            box.classList.replace('animate-slide-in','animate-slide-out');
+            setTimeout(() => box.remove(), 350);
+        }, t);
+    })();
 </script>
 @endif
