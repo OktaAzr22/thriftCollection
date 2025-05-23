@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 
 class KategoriController extends Controller
 {
@@ -68,9 +69,21 @@ class KategoriController extends Controller
     }
 
     public function destroy(Kategori $kategori)
-    {
+{
+    try {
         $kategori->delete();
 
-        return redirect()->route('kategori.index')->with('alert', ['type' => 'info', 'message' => 'Kategori berhasil dihapus!', 'timeout' => 3500,]);
+        return redirect()->route('kategori.index')->with('alert', [
+            'type'    => 'info',
+            'message' => 'Kategori berhasil dihapus!',
+            'timeout' => 3500,
+        ]);
+    } catch (QueryException $e) {
+        return redirect()->route('kategori.index')->with('alert', [
+            'type'    => 'error',
+            'message' => 'Kategori tidak bisa dihapus karena masih digunakan oleh item.',
+            'timeout' => 5000,
+        ]);
     }
+}
 }

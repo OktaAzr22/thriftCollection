@@ -16,6 +16,7 @@
                 <li><a href="{{ route('brands.index') }}" class="block p-2 rounded hover:bg-gray-200">Brand</a></li>
                 <li><a href="{{ route('kategori.index') }}" class="block p-2 rounded hover:bg-gray-200">Kategori</a></li>
                 <li><a href="{{ route('toko.index') }}" class="block p-2 rounded hover:bg-gray-200">Toko</a></li>
+                <li><a href="{{ route('items.index') }}" class="block p-2 rounded hover:bg-gray-200">Item</a></li>
             </ul>
         </nav>
     </aside>

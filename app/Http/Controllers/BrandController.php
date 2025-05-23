@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
@@ -64,17 +65,28 @@ class BrandController extends Controller
     }
 
     public function destroy(Brand $brand) {
-        if ($brand->image) {
-            Storage::disk('public')->delete($brand->image);
-        }
+        try {
+            if ($brand->image) {
+                Storage::disk('public')->delete($brand->image);
+            }
 
-        $brand->delete();
-        return redirect()->route('brands.index')->with('alert', [
+            $brand->delete();
+            return redirect()->route('brands.index')->with('alert', [
             'type'    => 'info',
             'message' => 'Brand dihapus!',
             'timeout' => 3500
         ]);
+        } catch (QueryException $e) {
+            return redirect()->route('brands.index')->with('alert', [
+            'type'    => 'error',
+            'message' => 'Brand tidak bisa dihapus karena masih digunakan oleh item.',
+            'timeout' => 5000
+        ]);
+        }
 
     }     
 }
 
+
+   
+        

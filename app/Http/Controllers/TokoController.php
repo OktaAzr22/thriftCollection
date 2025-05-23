@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Toko;
+use GuzzleHttp\Psr7\Query;
+use Illuminate\Database\QueryException;
 
 class TokoController extends Controller
 {
@@ -45,8 +47,16 @@ class TokoController extends Controller
 
 
    public function destroy(Toko $toko) {
-        $toko->delete();
+        try {
+            $toko->delete();
 
-        return redirect()->route('toko.index')->with('alert', ['type' => 'info', 'message' => 'Toko berhasil dihapus!', 'timeout' => 3500,]);
+            return redirect()->route('toko.index')->with('alert', ['type' => 'info', 'message' => 'Toko berhasil dihapus!', 'timeout' => 3500,]);
+        } catch (QueryException $e) {
+            return redirect()->route('toko.index')->with('alert', ['type' => 'error', 'message' => 'Toko tidak bisa dihapus karena masih digunakan oleh item.', 'timeout' => 3500,]);
+        }
    }
 }
+
+
+
+        
