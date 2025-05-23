@@ -6,9 +6,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     @stack('styles')
+   
+
 </head>
 <body class="bg-gray-100 text-gray-800">
-    @stack('alerts')
+     
+
    <!-- Sidebar fixed -->
     <aside class="fixed top-0 left-0 h-screen w-64 bg-white shadow-lg overflow-y-auto">
         <div class="p-4 font-bold text-xl border-b">My Sidebar</div>
@@ -37,6 +40,17 @@
         text: '{{ session('success') }}',
         timer: 2000,
         showConfirmButton: false,
+    });
+</script>
+@endif
+@if(session('success_swal'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Sukses!',
+        text: '{{ session("success_swal") }}',
+        timer: 2000,
+        showConfirmButton: false
     });
 </script>
 @endif

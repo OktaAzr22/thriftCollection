@@ -35,6 +35,7 @@ class KategoriController extends Controller
         try {
             Kategori::create($request->all());
             return redirect()->route('kategori.index')
+            
                              ->with('success', 'Kategori berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()
