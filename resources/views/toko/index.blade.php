@@ -30,33 +30,13 @@
   }
 </style>
 @endpush
-@push('alerts')
-  @if(session('success') && session('source') !== 'create')
-  <div id="customAlert" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded shadow-lg flex items-center space-x-3 z-50 animate-slide-in pointer-events-auto w-[300px]">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2l4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span class="text-sm break-words">{{ session('success') }}</span>
-    <div class="absolute bottom-0 left-0 h-1 bg-green-700 animate-progress w-full"></div>
-  </div>
-  @endif
-
-  @if(session('error'))
-  <div class="fixed top-4 right-4 bg-red-500 text-white px-4 py-3 rounded shadow-lg z-50 flex items-center space-x-3 animate-slide-in w-[300px]">
-    <i class="fas fa-exclamation-circle"></i>
-    <span class="text-sm">{{ session('error') }}</span>
-    <div class="absolute bottom-0 left-0 h-1 bg-red-700 animate-progress w-full"></div>
-  </div>
-  @endif
-@endpush
-
-
-
 
 @section('content')
+<x-alert />
+
 <div class=" bg-white p-6 rounded shadow">
-   <h1 class="text-2xl font-bold mb-4">Manajemen Toko</h1>
-   {{-- FILTER PENCARIAN --}}
+  <h1 class="text-2xl font-bold mb-4">Manajemen Toko</h1>
+  {{-- FILTER PENCARIAN --}}
    <form method="GET" action="{{ route('toko.index') }}" class="mb-6 w-full max-w-md mx-auto">
       <div class="relative flex items-center">
          <input type="text" name="search" id="searchInput" value="{{ request('search') }}" placeholder="Cari toko..."
@@ -78,7 +58,7 @@
          </button>
       </div>
    </form>
-   {{-- FORM TAMBAH TOKO --}}
+  {{-- FORM TAMBAH TOKO --}}
    <form action="{{ route('toko.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       @csrf
       <div>
@@ -104,94 +84,99 @@
       </div>
    </form>
    <hr>
-   {{-- DAFTAR TOKO --}}
-  <h2 class="text-2xl font-semibold mb-4 text-gray-800">Daftar Toko</h2>
+  {{-- DAFTAR TOKO --}}
+<h2 class="text-2xl font-semibold mb-4 text-gray-800">Daftar Toko</h2>
 
-
-<div class="overflow-x-auto bg-white shadow-md rounded-lg">
-  <table class="min-w-full text-sm text-gray-700">
-    <thead class="bg-gray-100 text-gray-700">
-      <tr>
-        <th class="p-3 border text-center">#</th>
-        <th class="p-3 border text-left">Nama</th>
-        <th class="p-3 border text-left">Asal</th>
-        <th class="p-3 border text-left">Deskripsi</th>
-        <th class="p-3 border text-center">Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-      @forelse($tokos as $index => $toko)
-        <tr class="hover:bg-gray-50">
-          <td class="p-3 border text-center">{{ $tokos->firstItem() + $index }}</td>
-          <td class="p-3 border">{{ $toko->nama }}</td>
-          <td class="p-3 border">{{ $toko->asal }}</td>
-          <td class="p-3 border">{{ $toko->deskripsi }}</td>
-          <td class="p-3 border text-center">
-            <div class="flex justify-center gap-3 text-gray-600">
-              <button 
-                onclick="openModal({{ $toko }})" 
-                class="hover:text-yellow-500 transition-colors"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <form action="{{ route('toko.destroy', $toko->id) }}" method="POST" class="inline form-delete">
-                @csrf
-                @method('DELETE')
-                <button 
-                  type="submit" 
-                  class="hover:text-red-500 transition-colors"
-                  title="Hapus"
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </form>
-            </div>
-          </td>
-        </tr>
-      @empty
+@if($tokos->isEmpty())
+  <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+    <div class="flex items-center">
+      <i class="fas fa-info-circle text-blue-500 mr-3"></i>
+      <p class="text-sm text-blue-700">Data Toko Tidak Ada</p>
+    </div>
+  </div>
+@else
+  <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+    <table class="min-w-full text-sm text-gray-700">
+      <thead class="bg-gray-100 text-gray-700">
         <tr>
-          <td colspan="5" class="p-4 text-center text-gray-500">Tidak ada data toko.</td>
+          <th class="p-3 border text-center">#</th>
+          <th class="p-3 border text-left">Nama</th>
+          <th class="p-3 border text-left">Asal</th>
+          <th class="p-3 border text-left">Deskripsi</th>
+          <th class="p-3 border text-center">Aksi</th>
         </tr>
-      @endforelse
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        @foreach($tokos as $index => $toko)
+          <tr class="hover:bg-gray-50">
+            <td class="p-3 border text-center">{{ $tokos->firstItem() + $index }}</td>
+            <td class="p-3 border">{{ $toko->nama }}</td>
+            <td class="p-3 border">{{ $toko->asal }}</td>
+            <td class="p-3 border">{{ $toko->deskripsi }}</td>
+            <td class="p-3 border text-center">
+              <div class="flex justify-center gap-3 text-gray-600">
+                <button 
+                  onclick="openModal({{ $toko }})" 
+                  class="hover:text-yellow-500 transition-colors"
+                  title="Edit"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+                <form action="{{ route('toko.destroy', $toko->id) }}" method="POST" class="inline form-delete">
+                  @csrf
+                  @method('DELETE')
+                  <button 
+                    type="submit" 
+                    class="hover:text-red-500 transition-colors"
+                    title="Hapus"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
 
-
-   <div class="flex flex-col md:flex-row justify-between items-center mt-4 text-sm text-gray-600">
-      <div class="mb-2 md:mb-0">
-        Menampilkan <span class="font-medium">{{ $tokos->firstItem() }}</span>
-        sampai <span class="font-medium">{{ $tokos->lastItem() }}</span>
-        dari total <span class="font-semibold">{{ $tokos->total() }}</span> toko
+  {{-- Pagination, stats, dll --}}
+  <div class="flex flex-col md:flex-row justify-between items-center mt-4 text-sm text-gray-600">
+    <div class="mb-2 md:mb-0">
+      Menampilkan <span class="font-medium">{{ $tokos->firstItem() }}</span>
+      sampai <span class="font-medium">{{ $tokos->lastItem() }}</span>
+      dari total <span class="font-semibold">{{ $tokos->total() }}</span> toko
     </div>
     <div>
       <nav class="inline-flex shadow-sm rounded-md" aria-label="Pagination">
-            {{-- Previous --}}
-            @if ($tokos->onFirstPage())
-                <span class="px-3 py-1 border border-gray-300 bg-gray-200 text-gray-500 rounded-l-md">←</span>
-            @else
-                <a href="{{ $tokos->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 bg-white hover:bg-blue-100 text-blue-600 rounded-l-md">←</a>
-            @endif
+        {{-- Previous --}}
+              @if ($tokos->onFirstPage())
+                  <span class="px-3 py-1 border border-gray-300 bg-gray-200 text-gray-500 rounded-l-md">←</span>
+              @else
+                  <a href="{{ $tokos->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 bg-white hover:bg-blue-100 text-blue-600 rounded-l-md">←</a>
+              @endif
 
-            {{-- Page numbers --}}
-            @foreach ($tokos->getUrlRange(1, $tokos->lastPage()) as $page => $url)
-                @if ($page == $tokos->currentPage())
-                    <span class="px-3 py-1 border border-gray-300 bg-blue-600 text-white">{{ $page }}</span>
-                @else
-                    <a href="{{ $url }}" class="px-3 py-1 border border-gray-300 bg-white hover:bg-blue-100 text-blue-600">{{ $page }}</a>
-                @endif
-            @endforeach
+              {{-- Page numbers --}}
+              @foreach ($tokos->getUrlRange(1, $tokos->lastPage()) as $page => $url)
+                  @if ($page == $tokos->currentPage())
+                      <span class="px-3 py-1 border border-gray-300 bg-blue-600 text-white">{{ $page }}</span>
+                  @else
+                      <a href="{{ $url }}" class="px-3 py-1 border border-gray-300 bg-white hover:bg-blue-100 text-blue-600">{{ $page }}</a>
+                  @endif
+              @endforeach
 
-            {{-- Next --}}
-            @if ($tokos->hasMorePages())
-                <a href="{{ $tokos->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 bg-white hover:bg-blue-100 text-blue-600 rounded-r-md">→</a>
-            @else
-                <span class="px-3 py-1 border border-gray-300 bg-gray-200 text-gray-500 rounded-r-md">→</span>
-            @endif
+              {{-- Next --}}
+              @if ($tokos->hasMorePages())
+                  <a href="{{ $tokos->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 bg-white hover:bg-blue-100 text-blue-600 rounded-r-md">→</a>
+              @else
+                  <span class="px-3 py-1 border border-gray-300 bg-gray-200 text-gray-500 rounded-r-md">→</span>
+              @endif
       </nav>
     </div>
-   </div>
+  </div>
+@endif
+
 </div>
 {{-- MODAL --}}
 <div id="modalEdit" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center invisible opacity-0 transition-opacity duration-300 z-50">
@@ -212,21 +197,7 @@
 @endsection
 
 @push('scripts')
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const alert = document.getElementById('customAlert');
-    if (alert) {
-      setTimeout(() => {
-        alert.classList.remove('animate-slide-in');
-        alert.classList.add('animate-slide-out');
-        setTimeout(() => {
-          alert.remove();
-        }, 500); // waktu animasi slide out
-      }, 4000);
-    }
-  });
-</script>
-<script>
+  <script>
    function clearSearch() {
     window.location.href = "{{ route('toko.index') }}";
    }
