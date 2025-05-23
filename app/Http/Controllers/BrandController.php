@@ -1,29 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-// app/Http/Controllers/BrandController.php
+
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
-   public function index(Request $request)
-{
-    $query = Brand::query();
+   public function index(Request $request) {
+     $query = Brand::query();
 
-    if ($request->has('search')) {
+     if ($request->has('search')) {
         $query->where('name', 'like', '%' . $request->search . '%');
-    }
-
+     }
      $brands = $query->get();
+     
+     return view('brands.index', compact('brands'));
+   }
 
-    return view('brands.index', compact('brands'));
-}
-
-
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'name' => 'required|string|min:2|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -39,11 +35,10 @@ class BrandController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('brands.index')->with('success', 'Brand berhasil ditambahkan.');
+        return redirect()->route('brands.index')->with('success_swal', 'Barang berhasil ditambahkan!');
     }
 
-    public function update(Request $request, Brand $brand)
-    {
+    public function update(Request $request, Brand $brand) {
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -60,17 +55,26 @@ class BrandController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('brands.index')->with('success', 'Brand berhasil diupdate.');
+        return redirect()->route('brands.index')->with('alert', [
+            'type'    => 'info',
+            'message' => 'Brand berhasil diperbarui!',
+            'timeout' => 3500
+        ]);
+
     }
 
-    public function destroy(Brand $brand)
-    {
+    public function destroy(Brand $brand) {
         if ($brand->image) {
             Storage::disk('public')->delete($brand->image);
         }
 
         $brand->delete();
-        return redirect()->route('brands.index')->with('success', 'Brand berhasil dihapus.');
-    }
+        return redirect()->route('brands.index')->with('alert', [
+            'type'    => 'info',
+            'message' => 'Brand dihapus!',
+            'timeout' => 3500
+        ]);
+
+    }     
 }
 

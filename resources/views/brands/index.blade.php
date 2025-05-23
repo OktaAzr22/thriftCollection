@@ -2,14 +2,6 @@
 
 @push('styles')
 <style>
-   .hide-scrollbar {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-   }
-   .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-   }
-
    @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -43,8 +35,8 @@
 @endpush
 
 @section('content')
+<x-alert />
 <h1 class="text-2xl font-bold mb-4">Brand List</h1>
-
 {{-- Form Tambah Brand --}}
 <div class="bg-white rounded-lg shadow fade-in p-6 mb-6 relative" id="form-produk-wrapper">
    <div class="flex justify-between items-center mb-4">
@@ -174,9 +166,6 @@
    </div>
    @endforelse
 </div>
-
-{{-- Pagination --}}
-
 @endsection
 
 @push('scripts')
