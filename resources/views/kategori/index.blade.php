@@ -2,7 +2,6 @@
 
 @push('styles')
 <style>
-    /* Hilangkan scrollbar tapi tetap bisa scroll */
     .hide-scrollbar::-webkit-scrollbar {
         display: none;
     }
@@ -17,14 +16,12 @@
 <x-alert />
 <x-breadcrumb :items="autoBreadcrumb()" />
 
-
 <h1 class="text-2xl font-bold text-gray-800 mb-6">
     <i class="fas fa-tags mr-2"></i> Manajemen Kategori
 </h1>
 
 <div class="container mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
         <!-- Form Section -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden min-h-[500px]">
             <div class="bg-blue-600 px-6 py-4 text-white">

@@ -4,7 +4,7 @@
 <x-breadcrumb :items="autoBreadcrumb()" />
 
 <div class="max-w-5xl mx-auto px-4 py-10">
-   <a href="{{ route('items.index') }}" class="inline-flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-blue-500 mb-4">
+    <a href="{{ route('items.index') }}" class="inline-flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-blue-500 mb-4">
         <i class="fas fa-arrow-left mr-2"></i> Kembali ke daftar
     </a>
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">

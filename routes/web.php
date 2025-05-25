@@ -5,12 +5,9 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\TokoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('items', ItemController::class);
 route::resource('brands', BrandController::class)->except(['create','edit', 'show']);
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');

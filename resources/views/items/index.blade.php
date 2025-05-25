@@ -12,8 +12,6 @@
         </a>
     </div>
 
-    
-
     @if (session('success'))
         <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
             {{ session('success') }}
@@ -217,8 +215,5 @@
         document.getElementById('modal-edit-item').classList.add('hidden');
     }
 </script>
-
-
-
 
 @endsection
