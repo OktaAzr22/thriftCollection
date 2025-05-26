@@ -7,7 +7,7 @@ use App\Http\Controllers\TokoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('items', ItemController::class);
 route::resource('brands', BrandController::class)->except(['create','edit', 'show']);
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
@@ -18,3 +18,9 @@ Route::get('/toko', [TokoController::class, 'index'])->name('toko.index');
 Route::post('/toko', [TokoController::class, 'store'])->name('toko.store');
 Route::put('/toko/{toko}', [TokoController::class, 'update'])->name('toko.update');
 Route::delete('/toko/{toko}', [TokoController::class, 'destroy'])->name('toko.destroy');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Tambahkan rute lain yang diperlukan
+});
