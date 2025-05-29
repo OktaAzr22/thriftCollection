@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <style>
+    .sidebar {
+      width: 16rem;
+      transition: all 0.3s ease;
+    }
+    .sidebar-collapsed .sidebar {
+      width: 4rem;
+    }
+    .sidebar-collapsed .sidebar-text {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      transition: opacity 0.2s ease, width 0.3s ease 0.1s;
+    }
+    .sidebar-text {
+      opacity: 1;
+      width: auto;
+      height: auto;
+      transition: opacity 0.3s ease 0.1s, width 0.3s ease;
+    }
+    
+  </style>
+</head>
+<body class="h-screen overflow-hidden font-sans bg-gray-100">
+  <div class="flex flex-col h-full">
+      <header class="flex items-center justify-between w-full px-6 py-3 bg-white shadow">
+            <div class="flex items-center gap-3">
+               <button onclick="toggleSidebar()" class="text-gray-500 transition-colors hover:text-black md:hidden">
+                  <i class="text-lg fas fa-bars"></i>
+               </button>
+               <h1 class="text-lg font-semibold text-gray-800">Admin Master</h1>
+            </div>
+            <div class="flex items-center gap-4">
+               <!-- Wrapper Notifikasi -->
+               <div class="relative inline-block">
+                  <!-- Icon Bell -->
+                  <button onclick="toggleNotif()" class="relative text-xl text-gray-700 hover:text-black focus:outline-none">
+                     <i class="fas fa-bell"></i>
+                     @if($totalNotifications > 0)
+                        <span class="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-2 -right-2">
+                           {{ $totalNotifications }}
+                        </span>
+                     @endif
+                  </button>
+                  <!-- Card Riwayat Notif -->
+                  <div id="notifCard" class="absolute right-0 z-50 mt-3 transition-all duration-300 transform scale-95 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 pointer-events-none w-72">
+                     <div class="p-4 font-semibold text-gray-700 border-b">Riwayat Notifikasi</div>
+                     <!-- Konten scrollable -->
+                     <div class="overflow-y-auto max-h-60">
+                        <ul class="text-sm divide-y divide-gray-100">
+                          @forelse($allNotifications as $notif)
+                          <li class="px-4 py-2 hover:bg-gray-50">
+                            <div class="flex items-start">
+                              <!-- Icon berbeda untuk setiap jenis notifikasi -->
+                              @if($notif['type'] === 'Brand')
+                              <svg class="w-5 h-5 mt-0.5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                              </svg>
+                              @elseif($notif['type'] === 'Kategori')
+                              <svg class="w-5 h-5 mt-0.5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                              </svg>
+                              @elseif($notif['type'] === 'Toko')
+                              <svg class="w-5 h-5 mt-0.5 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                              @elseif($notif['type'] === 'Item')
+                              <svg class="w-5 h-5 mt-0.5 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                              </svg>
+                              @endif
+                              <div>
+                                  <div class="font-medium">
+                                      {{ $notif['message'] }}
+                                  </div>
+                                  <div class="text-sm text-gray-500">
+                                      {{ $notif['time']->diffForHumans() }}
+                                  </div>
+                              </div>
+                            </div>
+                                       </li>
+            @empty
+            <li class="p-3 text-center text-gray-500">Tidak ada notifikasi baru</li>
+            @endforelse
+
+                              
+                        </ul>
+                     </div>
+                     <div class="p-2 text-center border-t">
+                        <button class="text-sm text-blue-600 hover:underline">Done</button>
+                     </div>
+                  </div>
+                  </div>
+                  <div class="relative">
+                     <button class="flex items-center space-x-2 text-sm">
+                     <img  alt="User" class="w-8 h-8 rounded-full" />
+                     <span class="hidden md:inline-block">John Doe</span>
+                     </button>
+                  </div>
+               </div>
+      </header> 
+      <div class="flex flex-1 overflow-hidden">
+         <!-- Sidebar -->
+         <div class="flex flex-col h-full px-2 py-4 bg-white shadow-md sidebar">
+            <div class="flex items-center justify-between px-3 mb-6">
+            <h2 class="text-lg font-bold sidebar-text whitespace-nowrap">MyApp</h2>
+            <button onclick="toggleSidebar()" class="text-gray-500 transition-colors hover:text-black">
+               <i id="collapseIcon" class="fas fa-angle-double-left"></i>
+            </button>
+            </div>
+            <nav class="flex-1 space-y-2">
+            <a
+               href="{{ url('/') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+               <i class="w-5 text-center fas fa-home"></i>
+               <span class="sidebar-text whitespace-nowrap">Dashboard</span>
+            </a>
+            <a
+               href="{{ route('brands.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+               <i class="w-5 text-center fas fa-box"></i>
+               <span class="sidebar-text whitespace-nowrap">Brands</span>
+            </a>
+            <a href="{{ route('kategori.index') }}"class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+               <i class="w-5 text-center fas fa-box"></i>
+               <span class="sidebar-text whitespace-nowrap">Kategori</span>
+            </a>
+            <a href="{{ route('toko.index') }}"class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+               <i class="w-5 text-center fas fa-box"></i>
+               <span class="sidebar-text whitespace-nowrap">Toko</span>
+            </a>
+            <a onclick="openModal()" class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+              <i class="w-5 text-center fas fa-home"></i>
+                <span class="sidebar-text whitespace-nowrap">Modal</span>
+              </a>
+              <a onclick="openDrawer()" class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+              <i class="w-5 text-center fas fa-home"></i>
+                <span class="sidebar-text whitespace-nowrap">Drawer</span>
+              </a>
+            </nav>
+            <div class="px-3 py-2 border-t">
+               <div class="flex items-center gap-3">
+                  <img  alt="User" class="w-8 h-8 rounded-full">
+                  <div class="sidebar-text">
+                     <p class="text-sm font-medium whitespace-nowrap">Admin Master</p>
+                     <p class="text-xs text-gray-500 whitespace-nowrap">Admin</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <main class="flex flex-col flex-1 p-6 space-y-4 overflow-hidden">
+            @yield('content')
+            <!-- sec 2-->
+            <div class="p-6 mb-6 bg-white rounded-lg shadow">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold">Input Form</h2>
+                <button
+                  id="toggleFormBtn"
+                  onclick="toggleForm()"
+                  aria-expanded="false"
+                  aria-controls="formContent"
+                >
+                  <i id="toggleIcon" class="fas fa-chevron-down"></i>
+                </button>
+              </div>
+              <div
+                id="formContent"
+                class="overflow-hidden transition-all duration-300 ease-in-out"
+                style="height: 0px;"
+              >
+                <form class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div>
+                    <label class="block mb-1 text-sm font-medium text-gray-700" for="name">Name</label>
+                    <input
+                      id="name"
+                      type="text"
+                      class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
+                      placeholder="Enter name"
+                    />
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-sm font-medium text-gray-700" for="email">Email</label>
+                    <input
+                      id="email"
+                      type="email"
+                      class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div class="md:col-span-2">
+                    <button
+                      type="submit"
+                      class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- sec 3 -->
+            <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
+               <div class="flex items-center justify-between mb-4">
+               <h2 class="text-xl font-semibold text-gray-800">Daftar Pengguna</h2>
+               <div class="relative flex items-center gap-2">
+                  <input type="text" placeholder="Cari nama atau email..."
+                  class="w-64 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <!-- Titik tiga -->
+                  <button id="optionsToggle" class="flex items-center justify-center w-10 h-10 text-gray-500 transition rounded-md hover:bg-gray-100 hover:text-gray-700">
+                  <i class="fas fa-ellipsis-v"></i>
+                  </button>
+
+                  <!-- Dropdown opsi -->
+                  <div id="optionsMenu" class="absolute right-0 z-50 hidden w-32 text-sm bg-white border border-gray-200 rounded shadow top-12">
+                  <button onclick="setAction('edit', 1)" class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100">Edit</button>
+                  <button onclick="setAction('delete', 1)" class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100">Hapus</button>
+                  </div>
+               </div>
+            </div>
+               <div class="overflow-auto">
+                  <table class="min-w-full text-sm">
+                     <thead class="sticky top-0 z-10 text-xs text-left text-gray-500 uppercase bg-gray-100">
+                     <tr>
+                        <th class="px-4 py-2">#</th>
+                        <th class="px-4 py-2">Name</th>
+                        <th class="px-4 py-2">Email</th>
+                        <th class="px-4 py-2">Action</th>
+                     </tr>
+                     </thead>
+                     <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                           <td class="px-6 py-4 text-sm text-gray-700">1</td>
+                           <td class="px-6 py-4">
+                              <div class="flex items-center space-x-4">
+                              <img class="object-cover w-10 h-10 rounded-full" src="https://i.pravatar.cc/100?img=1" alt="Avatar">
+                              <div>
+                                 <p class="text-sm font-medium text-gray-900">John Doe</p>
+                                 <p class="text-xs text-gray-500">john@example.com</p>
+                              </div>
+                              </div>
+                           </td>
+                           <td class="px-6 py-4 text-sm text-gray-700">Admin</td>
+                           <td class="px-6 py-4">
+                              <button id="actionBtn" onclick="goToAction(1)" class="text-lg text-blue-600 transition hover:text-blue-800">
+                              <i id="actionIcon" class="fas fa-eye"></i>
+                              </button>
+                           </td>
+                        </tr> 
+                     </tbody>
+                  </table>
+               </div>
+               <div class="flex items-center justify-between mt-4 text-sm text-gray-600">
+                  <div>Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">25</span> results</div>
+                  <div class="space-x-1">
+                     <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Prev</button>
+                     <button class="px-3 py-1 text-white bg-blue-600 rounded">1</button>
+                     <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">2</button>
+                     <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</button>
+                  </div>
+               </div>
+            </div>
+         </main>
+      </div>    
+  </div>
+  <!-- Modal Overlay -->
+  <div id="modalTambah" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 bg-black opacity-0 pointer-events-none bg-opacity-40">
+    <!-- Modal Content -->
+    <div class="w-full max-w-md p-6 transition-transform duration-300 transform scale-95 bg-white rounded-lg shadow-lg">
+      <h2 class="mb-4 text-lg font-semibold">Tambah Data</h2>
+      
+      <form onsubmit="event.preventDefault(); closeModal(); alert('Data disimpan!');">
+        <div class="mb-4">
+          <label class="block mb-1 text-sm font-medium">Nama</label>
+          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400" required />
+        </div>
+        <div class="mb-4">
+          <label class="block mb-1 text-sm font-medium">Deskripsi</label>
+          <textarea class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"></textarea>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
+          <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Drawer Overlay -->
+  <div id="drawer" class="fixed inset-0 z-50 flex justify-end pr-6 transition-opacity duration-300 bg-black opacity-0 pointer-events-none bg-opacity-40">
+    <!-- Drawer Content -->
+    <div class="bg-white w-full max-w-md h-[90vh] my-auto rounded-lg shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+      
+      <!-- Sticky Header -->
+      <div class="sticky top-0 z-10 flex items-center justify-between p-4 bg-white border-b rounded-t-lg">
+        <h2 class="text-lg font-semibold">Tambah Data</h2>
+        <button onclick="closeDrawer()" class="text-gray-600 hover:text-black">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Content -->
+      <div class="flex-1 px-6 py-4 space-y-4 overflow-y-auto">
+        <div>
+          <label class="block mb-1 text-sm font-medium">Nama</label>
+          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded" required />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm font-medium">Keterangan</label>
+          <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded"></textarea>
+        </div>
+
+        <!-- Simulasi isi panjang -->
+        <div class="space-y-3">
+          
+          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded" placeholder="Input tambahan..." />
+          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded" placeholder="Input tambahan..." />
+        </div>
+      </div>
+
+      <!-- Sticky Footer -->
+      <div class="sticky bottom-0 z-10 p-4 bg-white border-t rounded-b-lg">
+        <div class="flex justify-end">
+          <button type="submit" class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleSidebar() {
+      const body = document.body;
+      const icon = document.getElementById("collapseIcon");
+      
+      body.classList.toggle("sidebar-collapsed");
+      
+      if (body.classList.contains("sidebar-collapsed")) {
+        icon.classList.remove("fa-angle-double-left");
+        icon.classList.add("fa-angle-double-right");
+      } else {
+        icon.classList.remove("fa-angle-double-right");
+        icon.classList.add("fa-angle-double-left");
+      }
+    }
+
+      // Fungsi toggleForm tetap sama
+      function toggleForm() {
+         const formContent = document.getElementById("formContent");
+         const icon = document.getElementById("toggleIcon");
+
+         if (formContent.style.height === "0px") {
+            formContent.style.height = formContent.scrollHeight + "px";
+            icon.classList.remove("fa-chevron-down");
+            icon.classList.add("fa-chevron-up");
+            document.getElementById("toggleFormBtn").setAttribute("aria-expanded", "true");
+         } else {
+            formContent.style.height = "0px";
+            icon.classList.remove("fa-chevron-up");
+            icon.classList.add("fa-chevron-down");
+            document.getElementById("toggleFormBtn").setAttribute("aria-expanded", "false");
+         }
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+         // Pastikan form tertutup saat pertama kali dimuat
+         const formContent = document.getElementById("formContent");
+         formContent.style.height = "0px";
+      });
+  </script>
+  <!-- notif -->
+  <script>
+    function toggleNotif() {
+      const notif = document.getElementById("notifCard");
+      if (notif.classList.contains("opacity-0")) {
+        notif.classList.remove("opacity-0", "scale-95", "pointer-events-none");
+        notif.classList.add("opacity-100", "scale-100");
+      } else {
+        notif.classList.remove("opacity-100", "scale-100");
+        notif.classList.add("opacity-0", "scale-95", "pointer-events-none");
+      }
+    }
+
+     // Klik di luar untuk menutup
+    document.addEventListener('click', function (e) {
+      const notif = document.getElementById("notifCard");
+      const bell = e.target.closest('button');
+      if (!e.target.closest('#notifCard') && !bell) {
+        notif.classList.remove("opacity-100", "scale-100");
+        notif.classList.add("opacity-0", "scale-95", "pointer-events-none");
+      }
+    });
+  </script>
+  <!-- modal -->
+  <script>
+    function openModal() {
+      const modal = document.getElementById("modalTambah");
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.firstElementChild.classList.remove("scale-95");
+      modal.firstElementChild.classList.add("scale-100");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modalTambah");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      modal.firstElementChild.classList.remove("scale-100");
+      modal.firstElementChild.classList.add("scale-95");
+    }
+
+    // Tutup modal jika klik di luar konten
+    document.addEventListener("click", function (e) {
+      const modal = document.getElementById("modalTambah");
+      if (e.target === modal) closeModal();
+    });
+  </script>
+  <!-- drawer -->
+  <script>
+    function openDrawer() {
+      const drawer = document.getElementById("drawer");
+      drawer.classList.remove("opacity-0", "pointer-events-none");
+      drawer.firstElementChild.classList.remove("translate-x-full");
+      drawer.firstElementChild.classList.add("translate-x-0");
+    }
+
+    function closeDrawer() {
+      const drawer = document.getElementById("drawer");
+      drawer.classList.add("opacity-0", "pointer-events-none");
+      drawer.firstElementChild.classList.add("translate-x-full");
+      drawer.firstElementChild.classList.remove("translate-x-0");
+    }
+
+    // Tutup drawer jika klik luar
+    document.addEventListener("click", function (e) {
+      const drawer = document.getElementById("drawer");
+      if (e.target === drawer) closeDrawer();
+    });
+  </script>
+  <!-- action view table  -->
+  <script>
+    const optionsToggle = document.getElementById("optionsToggle");
+    const optionsMenu = document.getElementById("optionsMenu");
+    const actionBtn = document.getElementById("actionBtn");
+    const actionIcon = document.getElementById("actionIcon");
+
+    let currentAction = "view";
+    let userId = null;
+
+    optionsToggle.addEventListener("click", () => {
+      optionsMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!optionsToggle.contains(e.target) && !optionsMenu.contains(e.target)) {
+        optionsMenu.classList.add("hidden");
+      }
+    });
+
+    function setAction(type, id) {
+      userId = id;
+      if (type === "edit") {
+        currentAction = "edit";
+        actionIcon.className = "fas fa-edit text-yellow-500";
+      } else if (type === "delete") {
+        currentAction = "delete";
+        actionIcon.className = "fas fa-trash text-red-500";
+      } else {
+        currentAction = "view";
+        actionIcon.className = "fas fa-eye text-blue-600";
+      }
+      optionsMenu.classList.add("hidden");
+    }
+
+    function goToAction(id) {
+      if (currentAction === "delete") {
+        const confirmDelete = confirm("Yakin ingin menghapus?");
+        if (confirmDelete) {
+          alert("Data dihapus (simulasi)");
+        }
+      } else if (currentAction === "edit") {
+        window.location.href = `/user/${id}/edit`;
+      } else {
+        window.location.href = `/user/${id}`;
+      }
+    }
+  </script>
+</body>
+</html>
