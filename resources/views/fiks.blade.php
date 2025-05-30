@@ -20,17 +20,18 @@
                   <p class="text-xl font-semibold">{{ $totalTokos }}</p>
                </div>
             </div>
-             <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
-        <!-- Total Harga Items -->
-        <div class="p-6 bg-white rounded-lg shadow">
-            <div class="text-sm text-gray-500">Total Harga Item</div>
-            <div class="mt-1 text-3xl font-bold">Rp {{ number_format($totalHargaItems, 0, ',', '.') }}</div>
-        </div>
-        <!-- Total Ongkir -->
-        <div class="p-6 bg-white rounded-lg shadow">
-            <div class="text-sm text-gray-500">Total Ongkir</div>
-            <div class="mt-1 text-3xl font-bold">Rp {{ number_format($totalOngkir, 0, ',', '.') }}</div>
-        </div>
-    </div>
+            <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
+               <!-- Total Harga Items -->
+               <div class="p-6 bg-white rounded-lg shadow">
+                  <div class="text-sm text-gray-500">Total Harga Item</div>
+                  <div class="mt-1 text-3xl font-bold">Rp {{ number_format($totalHargaItems, 0, ',', '.') }}</div>
+               </div>
+               <!-- Total Ongkir -->
+               <div class="p-6 bg-white rounded-lg shadow">
+                  <div class="text-sm text-gray-500">Total Ongkir</div>
+                  <div class="mt-1 text-3xl font-bold">Rp {{ number_format($totalOngkir, 0, ',', '.') }}</div>
+               </div>
+            </div>
+            <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow"></div>
 @endsection
 

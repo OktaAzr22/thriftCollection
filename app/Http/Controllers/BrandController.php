@@ -92,11 +92,18 @@ class BrandController extends Controller
 
     }    
     
-    public function showBrandWithItemCount()
-    {
-        $brands = Brand::withCount('items')->get();
+    
 
-        return view('brand.index', compact('brands'));
+    public function items($brandId)
+    {
+        // Cari brand berdasarkan ID, kalau tidak ketemu error 404
+        $brand = Brand::findOrFail($brandId);
+
+        // Ambil semua items terkait brand ini (pastikan relasi sudah dibuat di model Brand)
+        $items = $brand->items;
+
+        // Tampilkan view dengan data items
+        return view('brands.items', compact('brand', 'items'));
     }
 }
 

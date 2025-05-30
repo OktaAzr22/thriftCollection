@@ -5,8 +5,9 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\TokoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\DashboardController;
 
+// Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('items', ItemController::class);
 route::resource('brands', BrandController::class)->except(['create','edit', 'show']);
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
@@ -18,9 +19,13 @@ Route::post('/toko', [TokoController::class, 'store'])->name('toko.store');
 Route::put('/toko/{toko}', [TokoController::class, 'update'])->name('toko.update');
 Route::delete('/toko/{toko}', [TokoController::class, 'destroy'])->name('toko.destroy');
 
-
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\BrandsController;
 
 Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/test', [BrandsController::class, 'index']);
+
+Route::get('/brand/{brand}/items', [BrandController::class, 'items'])->name('brand.items');
 
 
 

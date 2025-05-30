@@ -137,14 +137,12 @@
                <i class="w-5 text-center fas fa-box"></i>
                <span class="sidebar-text whitespace-nowrap">Toko</span>
             </a>
-            <a onclick="openModal()" class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
-              <i class="w-5 text-center fas fa-home"></i>
-                <span class="sidebar-text whitespace-nowrap">Modal</span>
-              </a>
-              <a onclick="openDrawer()" class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
-              <i class="w-5 text-center fas fa-home"></i>
-                <span class="sidebar-text whitespace-nowrap">Drawer</span>
-              </a>
+            <a href="{{ route('items.index') }}"class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+               <i class="w-5 text-center fas fa-box"></i>
+               <span class="sidebar-text whitespace-nowrap">Item</span>
+            </a>
+            
+             
             </nav>
             <div class="px-3 py-2 border-t">
                <div class="flex items-center gap-3">
@@ -158,140 +156,11 @@
          </div>
          <main class="flex flex-col flex-1 p-6 space-y-4 ">
             @yield('content')
-            <!-- sec 2-->
-            {{-- <div class="p-6 mb-6 bg-white rounded-lg shadow">
-              <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold">Input Form</h2>
-                <button
-                  id="toggleFormBtn"
-                  onclick="toggleForm()"
-                  aria-expanded="false"
-                  aria-controls="formContent"
-                >
-                  <i id="toggleIcon" class="fas fa-chevron-down"></i>
-                </button>
-              </div>
-              <div
-                id="formContent"
-                class="overflow-hidden transition-all duration-300 ease-in-out"
-                style="height: 0px;"
-              >
-                <form class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div>
-                    <label class="block mb-1 text-sm font-medium text-gray-700" for="name">Name</label>
-                    <input
-                      id="name"
-                      type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
-                      placeholder="Enter name"
-                    />
-                  </div>
-                  <div>
-                    <label class="block mb-1 text-sm font-medium text-gray-700" for="email">Email</label>
-                    <input
-                      id="email"
-                      type="email"
-                      class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
-                      placeholder="Enter email"
-                    />
-                  </div>
-                  <div class="md:col-span-2">
-                    <button
-                      type="submit"
-                      class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div> --}}
-            <!-- sec 3 -->
-            {{-- <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
-               <div class="flex items-center justify-between mb-4">
-               <h2 class="text-xl font-semibold text-gray-800">Daftar Pengguna</h2>
-               <div class="relative flex items-center gap-2">
-                  <input type="text" placeholder="Cari nama atau email..."
-                  class="w-64 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  <!-- Titik tiga -->
-                  <button id="optionsToggle" class="flex items-center justify-center w-10 h-10 text-gray-500 transition rounded-md hover:bg-gray-100 hover:text-gray-700">
-                  <i class="fas fa-ellipsis-v"></i>
-                  </button>
-
-                  <!-- Dropdown opsi -->
-                  <div id="optionsMenu" class="absolute right-0 z-50 hidden w-32 text-sm bg-white border border-gray-200 rounded shadow top-12">
-                  <button onclick="setAction('edit', 1)" class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100">Edit</button>
-                  <button onclick="setAction('delete', 1)" class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100">Hapus</button>
-                  </div>
-               </div>
-            </div>
-               <div class="overflow-auto">
-                  <table class="min-w-full text-sm">
-                     <thead class="sticky top-0 z-10 text-xs text-left text-gray-500 uppercase bg-gray-100">
-                     <tr>
-                        <th class="px-4 py-2">#</th>
-                        <th class="px-4 py-2">Name</th>
-                        <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Action</th>
-                     </tr>
-                     </thead>
-                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                           <td class="px-6 py-4 text-sm text-gray-700">1</td>
-                           <td class="px-6 py-4">
-                              <div class="flex items-center space-x-4">
-                              <img class="object-cover w-10 h-10 rounded-full" src="https://i.pravatar.cc/100?img=1" alt="Avatar">
-                              <div>
-                                 <p class="text-sm font-medium text-gray-900">John Doe</p>
-                                 <p class="text-xs text-gray-500">john@example.com</p>
-                              </div>
-                              </div>
-                           </td>
-                           <td class="px-6 py-4 text-sm text-gray-700">Admin</td>
-                           <td class="px-6 py-4">
-                              <button id="actionBtn" onclick="goToAction(1)" class="text-lg text-blue-600 transition hover:text-blue-800">
-                              <i id="actionIcon" class="fas fa-eye"></i>
-                              </button>
-                           </td>
-                        </tr> 
-                     </tbody>
-                  </table>
-               </div>
-               <div class="flex items-center justify-between mt-4 text-sm text-gray-600">
-                  <div>Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">25</span> results</div>
-                  <div class="space-x-1">
-                     <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Prev</button>
-                     <button class="px-3 py-1 text-white bg-blue-600 rounded">1</button>
-                     <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">2</button>
-                     <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</button>
-                  </div>
-               </div>
-            </div> --}}
+            
          </main>
       </div>    
   </div>
-  <!-- Modal Overlay -->
-  <div id="modalTambah" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 bg-black opacity-0 pointer-events-none bg-opacity-40">
-    <!-- Modal Content -->
-    <div class="w-full max-w-md p-6 transition-transform duration-300 transform scale-95 bg-white rounded-lg shadow-lg">
-      <h2 class="mb-4 text-lg font-semibold">Tambah Data</h2>
-      
-      <form onsubmit="event.preventDefault(); closeModal(); alert('Data disimpan!');">
-        <div class="mb-4">
-          <label class="block mb-1 text-sm font-medium">Nama</label>
-          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400" required />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1 text-sm font-medium">Deskripsi</label>
-          <textarea class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"></textarea>
-        </div>
-        <div class="flex justify-end gap-2">
-          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-          <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Simpan</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  
   
   <script>
     function toggleSidebar() {
@@ -355,29 +224,7 @@
       }
     });
   </script>
-  <!-- modal -->
-  <script>
-    // function openModal() {
-    //   const modal = document.getElementById("modalTambah");
-    //   modal.classList.remove("opacity-0", "pointer-events-none");
-    //   modal.firstElementChild.classList.remove("scale-95");
-    //   modal.firstElementChild.classList.add("scale-100");
-    // }
-
-    // function closeModal() {
-    //   const modal = document.getElementById("modalTambah");
-    //   modal.classList.add("opacity-0", "pointer-events-none");
-    //   modal.firstElementChild.classList.remove("scale-100");
-    //   modal.firstElementChild.classList.add("scale-95");
-    // }
-
-    // Tutup modal jika klik di luar konten
-    // document.addEventListener("click", function (e) {
-    //   const modal = document.getElementById("modalTambah");
-    //   if (e.target === modal) closeModal();
-    // });
-    
-  </script>
+  
   <script>
    function openModal(id) {
       const modal = document.getElementById(`modal-${id}`);
