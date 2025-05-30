@@ -1,6 +1,7 @@
-@extends('layouts.fiks')
+@extends('layouts.app')
 
 @section('content')
+<x-alert />
 <x-breadcrumb :items="autoBreadcrumb()" />
 
 <div class="container px-4 py-6 mx-auto">
@@ -10,13 +11,13 @@
             class="px-4 py-2 text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700">
             + Tambah Item
         </a>
+        <a onclick="openDrawer()" class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+              <i class="w-5 text-center fas fa-home"></i>
+                <span class="sidebar-text whitespace-nowrap">Drawer</span>
+              </a>
     </div>
 
-    @if (session('success'))
-        <div class="px-4 py-2 mb-4 text-green-800 bg-green-100 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
+   
 
     @if($items->isEmpty())
         <p class="text-gray-500">Belum ada item yang tersedia.</p>
@@ -165,6 +166,99 @@
     </div>
 </div>
 
+
+{{--  --}}
+<!-- Drawer Overlay -->
+ <div id="drawer" class="fixed inset-0 z-50 flex justify-end pr-6 transition-opacity duration-300 bg-black opacity-0 pointer-events-none bg-opacity-40">
+  <!-- Drawer Content -->
+  <div class="bg-white w-full max-w-xl h-[90vh] my-auto rounded-lg shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+    
+    <!-- Sticky Header -->
+    <div class="sticky top-0 z-10 flex items-center justify-between p-4 bg-white border-b rounded-t-lg">
+      <h2 class="text-lg font-semibold">Tambah Data</h2>
+      <button onclick="closeDrawer()" class="text-gray-600 hover:text-black">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Form Start -->
+    <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data" class="flex flex-col flex-1 overflow-hidden">
+      @csrf
+      <div class="flex-1 px-6 py-4 space-y-4 overflow-y-auto">
+        <div>
+          <label class="block mb-1 text-sm font-medium">Nama</label>
+          <input type="text" name="nama" class="w-full px-3 py-2 border border-gray-300 rounded" required />
+        </div>
+        <div class="flex gap-x-4">
+            <div class="w-1/2">
+                <label class="block mb-1 text-sm font-medium">Harga</label>
+                <input type="number" name="harga" placeholder="Masukkan Harga" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded" required />
+            </div>
+            <div class="w-1/2">
+                <label class="block mb-1 text-sm font-medium">Ongkir</label>
+                <input type="number"name="ongkir" placeholder="Ongkir" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded" required />
+            </div>
+        </div>
+        <div class="flex gap-x-4">
+            <div class="w-1/3">
+                <label class="block mb-1 text-sm font-medium">Toko</label>
+                <select name="toko_id" required class="w-full px-3 py-2 border border-gray-300 rounded">
+                <option value="">Pilih Toko</option>
+                @foreach($tokos as $toko)
+                    <option value="{{ $toko->id }}">{{ $toko->nama }}</option>
+                @endforeach
+                </select>
+            </div>
+            <div class="w-1/3">
+                <label class="block mb-1 text-sm font-medium">Brand</label>
+                <select name="brand_id" required class="w-full px-3 py-2 border border-gray-300 rounded">
+                <option value="">Pilih Brand</option>
+                @foreach($brands as $brand)
+                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                @endforeach
+                </select>
+            </div>
+            <div class="w-1/3">
+                <label class="block mb-1 text-sm font-medium">Kategori</label>
+                <select name="kategori_id" required class="w-full px-3 py-2 border border-gray-300 rounded">
+                <option value="">Pilih Kategori</option>
+                @foreach($kategoris as $kategori)
+                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                @endforeach
+                </select>
+            </div>
+        </div>
+        <div>
+          <label class="block mb-1 text-sm font-medium">Tanggal (Opsional)</label>
+          <input type="date" name="tanggal" id="tanggal" class="w-full px-3 py-2 border border-gray-300 rounded" value="{{ old('tanggal') }}">
+        </div>
+        <div>
+            <label class="block mb-1 text-sm font-medium">Gambar</label>
+            <input type="file" name="gambar" id="gambar" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded" onchange="previewImage()" />
+            <img id="preview" class="hidden mt-3 rounded shadow max-h-48" />
+        </div>
+
+
+        <div>
+          <label class="block mb-1 text-sm font-medium">Keterangan</label>
+          <textarea name="deskripsi" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded"></textarea>
+        </div>
+
+       
+      </div>
+
+      <!-- Sticky Footer -->
+      <div class="sticky bottom-0 z-10 p-4 bg-white border-t rounded-b-lg">
+        <div class="flex justify-end">
+          <button type="submit" class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">
+            Simpan
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{--  --}}
 <script>
     const basePath = '/storage/';
 
@@ -214,6 +308,9 @@
     function closeEditModal() {
         document.getElementById('modal-edit-item').classList.add('hidden');
     }
+</script>
+<script>
+ 
 </script>
 
 @endsection

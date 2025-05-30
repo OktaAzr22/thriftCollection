@@ -70,7 +70,7 @@ class ItemController extends Controller
             'tanggal' => $request->tanggal ?? Carbon::now(),
         ]);
 
-        return redirect()->route('items.index')->with('success', 'Item berhasil ditambahkan!');
+        return redirect()->route('items.index')->with('success_swal', 'Item berhasil ditambahkan!');
     }
 
     /**

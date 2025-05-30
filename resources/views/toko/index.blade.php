@@ -1,4 +1,4 @@
-@extends('layouts.fiks')
+@extends('layouts.app')
 
 @push('styles')
 <style>

@@ -292,49 +292,7 @@
       </form>
     </div>
   </div>
-  <!-- Drawer Overlay -->
-  <div id="drawer" class="fixed inset-0 z-50 flex justify-end pr-6 transition-opacity duration-300 bg-black opacity-0 pointer-events-none bg-opacity-40">
-    <!-- Drawer Content -->
-    <div class="bg-white w-full max-w-md h-[90vh] my-auto rounded-lg shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
-      
-      <!-- Sticky Header -->
-      <div class="sticky top-0 z-10 flex items-center justify-between p-4 bg-white border-b rounded-t-lg">
-        <h2 class="text-lg font-semibold">Tambah Data</h2>
-        <button onclick="closeDrawer()" class="text-gray-600 hover:text-black">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <!-- Scrollable Content -->
-      <div class="flex-1 px-6 py-4 space-y-4 overflow-y-auto">
-        <div>
-          <label class="block mb-1 text-sm font-medium">Nama</label>
-          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded" required />
-        </div>
-
-        <div>
-          <label class="block mb-1 text-sm font-medium">Keterangan</label>
-          <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded"></textarea>
-        </div>
-
-        <!-- Simulasi isi panjang -->
-        <div class="space-y-3">
-          
-          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded" placeholder="Input tambahan..." />
-          <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded" placeholder="Input tambahan..." />
-        </div>
-      </div>
-
-      <!-- Sticky Footer -->
-      <div class="sticky bottom-0 z-10 p-4 bg-white border-t rounded-b-lg">
-        <div class="flex justify-end">
-          <button type="submit" class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">
-            Simpan
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <script>
     function toggleSidebar() {
       const body = document.body;
@@ -437,27 +395,29 @@
 </script>
 
   <!-- drawer -->
-  <script>
-    function openDrawer() {
-      const drawer = document.getElementById("drawer");
-      drawer.classList.remove("opacity-0", "pointer-events-none");
-      drawer.firstElementChild.classList.remove("translate-x-full");
-      drawer.firstElementChild.classList.add("translate-x-0");
-    }
+ <!-- Script -->
+<script>
+  function openDrawer() {
+    const drawer = document.getElementById("drawer");
+    drawer.classList.remove("opacity-0", "pointer-events-none");
+    drawer.firstElementChild.classList.remove("translate-x-full");
+    drawer.firstElementChild.classList.add("translate-x-0");
+  }
 
-    function closeDrawer() {
-      const drawer = document.getElementById("drawer");
-      drawer.classList.add("opacity-0", "pointer-events-none");
-      drawer.firstElementChild.classList.add("translate-x-full");
-      drawer.firstElementChild.classList.remove("translate-x-0");
-    }
+  function closeDrawer() {
+    const drawer = document.getElementById("drawer");
+    drawer.classList.add("opacity-0", "pointer-events-none");
+    drawer.firstElementChild.classList.add("translate-x-full");
+    drawer.firstElementChild.classList.remove("translate-x-0");
+  }
 
-    // Tutup drawer jika klik luar
-    document.addEventListener("click", function (e) {
-      const drawer = document.getElementById("drawer");
-      if (e.target === drawer) closeDrawer();
-    });
-  </script>
+  // Tutup drawer jika klik di luar
+  document.addEventListener("click", function (e) {
+    const drawer = document.getElementById("drawer");
+    if (e.target === drawer) closeDrawer();
+  });
+  
+</script>
   
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @push('scripts')

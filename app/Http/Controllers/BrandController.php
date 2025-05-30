@@ -13,9 +13,14 @@ class BrandController extends Controller
 {
     $search = $request->input('search');
 
-    $brands = Brand::when($search, function ($query, $search) {
-        $query->where('name', 'like', '%' . $search . '%');
-    })->latest()->paginate(5)->withQueryString();
+    $brands = Brand::withCount('items')
+        ->when($search, function ($query, $search) 
+        {
+            $query->where('name', 'like', '%' . $search . '%');
+        })
+        ->latest()
+        ->paginate(5)
+        ->withQueryString();
 
     return view('brands.index', compact('brands', 'search'));
 }
@@ -85,7 +90,14 @@ class BrandController extends Controller
         ]);
         }
 
-    }     
+    }    
+    
+    public function showBrandWithItemCount()
+    {
+        $brands = Brand::withCount('items')->get();
+
+        return view('brand.index', compact('brands'));
+    }
 }
 
 

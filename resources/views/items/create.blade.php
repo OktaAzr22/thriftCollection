@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@push('styles')
-
-@endpush
 
 @section('content')
 <x-breadcrumb :items="autoBreadcrumb()" />
@@ -39,18 +36,16 @@
     <div>
         <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal (opsional)</label>
         <input type="date" name="tanggal" id="tanggal"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+               class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm"
                value="{{ old('tanggal') }}">
     </div>
 
     <input type="file" name="gambar" class="input" />
     <textarea name="deskripsi" placeholder="Deskripsi" class="input"></textarea>
 
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+    <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded">Simpan</button>
 </form>
 
 @endsection
 
-@push('scripts')
 
-@endpush

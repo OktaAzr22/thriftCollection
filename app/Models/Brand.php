@@ -12,10 +12,15 @@ class Brand extends Model
     protected $fillable = ['name', 'image'];
     
     public function getImageUrlAttribute()
-{
-    return $this->image
-        ? asset('storage/' . $this->image)
-        : asset('images/default-brand.png');
-}
+    {
+        return $this->image
+            ? asset('storage/' . $this->image)
+            : asset('images/default-brand.png');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'brand_id');
+    }
 
 }

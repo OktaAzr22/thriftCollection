@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<x-breadcrumb :items="autoBreadcrumb()" />
 
-<div class="max-w-5xl mx-auto px-4 py-10">
-    <a href="{{ route('items.index') }}" class="inline-flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-blue-500 mb-4">
-        <i class="fas fa-arrow-left mr-2"></i> Kembali ke daftar
+
+<div class="max-w-5xl px-4 py-10 mx-auto">
+    <a href="{{ route('items.index') }}" class="inline-flex items-center mb-4 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-500">
+        <i class="mr-2 fas fa-arrow-left"></i> Kembali ke daftar
     </a>
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+    <div class="overflow-hidden bg-white shadow-lg dark:bg-gray-800 rounded-2xl">
         <div class="grid grid-cols-1 md:grid-cols-2">
             {{-- Gambar Item --}}
-            <div class="bg-gray-100 dark:bg-gray-700 p-4 flex items-center justify-center">
-                <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama }}" class="object-contain max-h-96 w-full">
+            <div class="flex items-center justify-center p-4 bg-gray-100 dark:bg-gray-700">
+                <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama }}" class="object-contain w-full max-h-96">
             </div>
 
             {{-- Detail --}}
@@ -27,11 +27,11 @@
                     @if ($item->tanggal)
                         <p><span class="font-semibold">Tanggal:</span> {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</p>
                     @endif
-                    <p><span class="font-semibold">Total Harga:</span> <span class="text-green-600 font-semibold">Rp {{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}</span></p>
+                    <p><span class="font-semibold">Total Harga:</span> <span class="font-semibold text-green-600">Rp {{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}</span></p>
                 </div>
 
                 <div>
-                    <h3 class="font-semibold mt-4 text-gray-900 dark:text-white">Deskripsi:</h3>
+                    <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Deskripsi:</h3>
                     <p class="text-gray-700 dark:text-gray-300">{{ $item->deskripsi }}</p>
                 </div>
 
@@ -39,7 +39,7 @@
                 @if ($item->brand->image)
                     <div class="mt-4">
                         <h4 class="font-semibold text-gray-900 dark:text-white">Gambar Brand:</h4>
-                        <img src="{{ asset('storage/' . $item->brand->image) }}" alt="{{ $item->brand->name }}" class="w-32 h-32 object-contain mt-2 bg-white border p-2 rounded-xl">
+                        <img src="{{ asset('storage/' . $item->brand->image) }}" alt="{{ $item->brand->name }}" class="object-contain w-32 h-32 p-2 mt-2 bg-white border rounded-xl">
                     </div>
                 @endif
             </div>
