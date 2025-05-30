@@ -9,16 +9,17 @@ use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
-   public function index(Request $request) {
-     $query = Brand::query();
+   public function index(Request $request)
+{
+    $search = $request->input('search');
 
-     if ($request->has('search')) {
-        $query->where('name', 'like', '%' . $request->search . '%');
-     }
-     $brands = $query->get();
-     
-     return view('brands.index', compact('brands'));
-   }
+    $brands = Brand::when($search, function ($query, $search) {
+        $query->where('name', 'like', '%' . $search . '%');
+    })->latest()->paginate(5)->withQueryString();
+
+    return view('brands.index', compact('brands', 'search'));
+}
+
 
     public function store(Request $request) {
         $request->validate([

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.fiks')
 
 @section('content')
 <x-breadcrumb :items="autoBreadcrumb()" />
