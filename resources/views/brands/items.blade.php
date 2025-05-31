@@ -1,87 +1,86 @@
 @extends('layouts.app')
 
 @section('content')
-<x-alert />
-<div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
+<div class="p-4 bg-white rounded-lg shadow-lg">
     @if($items->count() > 0)
-    <!-- HEADER -->
-    <div class="flex flex-col items-start justify-between gap-4 mb-8 md:flex-row md:items-end">
+    <div class="flex items-start justify-between mb-4">
         <div>
-            <div class="flex items-center mb-2">
-                <a href="{{ url()->previous() }}" class="mr-4 text-gray-500 transition-colors hover:text-blue-600">
-                    <i class="text-xl fas fa-arrow-left"></i>
-                </a>
-                <h1 class="text-3xl font-bold text-gray-900">{{ $brand->nama_brand }}</h1>
-            </div>
-            <p class="ml-10 text-gray-500">Discover our premium collection</p>
+            <a href="{{ url()->previous() }}">
+                <button class="flex items-center gap-2 text-gray-600 hover:text-black">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="text-sm font-medium">Kembali</span>
+                </button>
+            </a>
         </div>
-        <div class="flex items-center space-x-3">
-            <span class="text-sm text-gray-500">{{ $items->count() }} products available</span>
-        </div>
+        <span class="px-4 py-1 text-sm text-gray-600 bg-gray-100 rounded-full shadow">{{ $items->count() }} items available</span>
     </div>
 
-    <!-- PRODUK SCROLLABLE CARD -->
-    <div class="w-full max-w-full overflow-x-auto">
-        <div class="flex gap-6 flex-nowrap">
-            @foreach($items as $item)
-            <div 
-                class="flex-shrink-0 overflow-hidden bg-white border border-gray-100 shadow-md rounded-xl w-72"
-                x-data="{ openModal: false }">
+    <hr>
+    <h3 class="text-gray-900">List {{ $brand->name }}</h3>
 
-                <!-- Gambar Klikable -->
-                <div class="relative cursor-pointer" @click="openModal = true">
-                    <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
-                        alt="{{ $item->nama }}"
-                        class="object-cover w-full h-48 bg-white">
-                    <div class="absolute px-3 py-1 text-sm font-bold text-white bg-blue-600 rounded-full top-3 right-3">
-                        Rp{{ number_format($item->harga) }}
-                    </div>
-                </div>
+    <div class="grid grid-rows-2 auto-cols-[13rem] grid-flow-col gap-6 overflow-x-auto p-3 max-w-full scrollbar-hide">
+        @foreach($items as $item)
+        <div onclick="openDrawer(this)"
+            class="overflow-hidden transition-transform rounded-lg shadow-lg cursor-pointer w-52 h-52 group hover:scale-105"
+            data-nama="{{ $item->nama }}"
+            data-brand="{{ $item->brand->name }}"
+            data-kategori="{{ $item->kategori->nama ?? 'General' }}"
+            data-toko="{{ $item->toko->nama ?? 'Unknown Store' }}"
+            data-asal="{{ $item->toko->asal ?? 'Not Found' }}"
+            data-tanggal="{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}"
+            data-harga="{{ number_format($item->harga) }}"
+            data-ongkir="{{ number_format($item->ongkir) }}"
+            data-total="{{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}"
+            data-deskripsi="{{ $item->deskripsi ?? 'Tidak ada deskripsi.' }}"
+            data-gambar="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
+        >
+            <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://via.placeholder.com/300x200?text=No+Image' }}" alt="{{ $item->nama }}" class="object-cover w-full h-full transition duration-300 group-hover:grayscale" />
+        </div>
+        @endforeach
+    </div>
 
-                <!-- Info -->
-                <div class="p-5">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="text-lg font-semibold text-gray-900 line-clamp-1">{{ $item->nama }}</h3>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                            {{ $item->kategori->nama ?? 'General' }}
-                        </span>
-                    </div>
-                    <div class="flex items-center mb-1 text-sm text-gray-500">
-                        <i class="mr-1 text-gray-400 fas fa-store"></i>
-                        <span>{{ $item->toko->nama ?? 'Unknown Store' }}</span>
-                    </div>
-                    <div class="flex items-center mb-3 text-sm text-gray-400">
-                        <i class="mr-1 fas fa-calendar-alt"></i>
-                        <span>Masuk: {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</span>
-                    </div>
-                    <p class="mb-4 text-sm text-gray-600 line-clamp-2">
-                        {{ $item->deskripsi ?: 'No description available.' }}
-                    </p>
-                    <button class="flex items-center justify-center w-full py-2 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
-                        <i class="mr-2 fas fa-shopping-cart"></i>
-                        Add to Cart
-                    </button>
-                </div>
+    <!-- Overlay -->
+    <div id="drawer-overlay" class="fixed inset-0 z-40 hidden bg-black bg-opacity-40" onclick="closeDrawer()"></div>
 
-                <!-- MODAL DETAIL -->
-                <div x-show="openModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" x-cloak>
-                    <div @click.away="openModal = false" class="w-11/12 max-w-xl p-6 bg-white rounded-lg shadow-lg">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-xl font-bold">{{ $item->nama }}</h2>
-                            <button @click="openModal = false" class="text-gray-500 hover:text-red-600">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://via.placeholder.com/400x300?text=No+Image' }}"
-                             alt="{{ $item->nama }}" class="object-contain w-full h-64 mb-4 rounded">
-                        <p class="mb-2 text-gray-700">Harga: <strong>Rp{{ number_format($item->harga) }}</strong></p>
-                        <p class="mb-2 text-gray-700">Kategori: {{ $item->kategori->nama ?? 'General' }}</p>
-                        <p class="mb-2 text-gray-700">Toko: {{ $item->toko->nama ?? 'Unknown Store' }}</p>
-                        <p class="text-gray-700">Deskripsi: {{ $item->deskripsi ?: 'Tidak ada deskripsi.' }}</p>
-                    </div>
-                </div>
+    <!-- Drawer -->
+    <!-- Drawer -->
+<div id="drawer" class="fixed top-10 right-0 w-[30rem] h-[90%] bg-white shadow-2xl rounded-2xl z-50 p-0 overflow-hidden 
+    transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+
+
+        <div class="sticky top-0 z-10 flex items-center justify-between px-6 pt-6 pb-4 bg-white border-b">
+            <h2 class="text-xl font-semibold text-gray-800">Detail Produk</h2>
+            <button onclick="closeDrawer()" class="text-2xl text-gray-400 hover:text-red-500">&times;</button>
+        </div>
+        <div class="flex items-start gap-4 px-6 py-4">
+            <div class="flex-shrink-0">
+                <img id="drawerImage" src="" alt="Image" class="rounded-lg shadow-md max-w-[8rem] max-h-[8rem] object-contain" />
             </div>
-            @endforeach
+            <div class="text-sm text-gray-700">
+                <p id="drawerName" class="text-lg font-semibold text-gray-800"></p>
+                <p id="drawerBrand" class="mt-1"></p>
+                <p id="drawerCategory" class="mt-1"></p>
+                <p id="drawerStore" class="mt-1"></p>
+                <p id="drawerOrigin" class="mt-1"></p>
+                <p class="mt-1">
+                    <span class="font-medium text-gray-600">Tanggal:</span>
+                    <span id="drawerDate" class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"></span>
+                </p>
+            </div>
+        </div>
+        <div class="px-6 pb-4 text-sm text-gray-700">
+            <div class="flex items-center justify-between mb-2">
+                <p><span class="font-medium text-gray-600">Harga:</span> <span id="drawerPrice" class="font-semibold text-green-600"></span></p>
+                <p><span class="font-medium text-gray-600">Ongkir:</span> <span id="drawerShipping" class="font-semibold text-blue-600"></span></p>
+            </div>
+            <div class="flex items-center justify-between pt-2 mt-1 border-t">
+                <p class="font-semibold text-gray-800">Total</p>
+                <p id="drawerTotal" class="font-bold text-red-600"></p>
+            </div>
+        </div>
+        <div class="px-6 pb-6 overflow-y-auto" style="flex-grow: 1;">
+            <h3 class="mb-1 text-sm font-semibold text-gray-600 uppercase">Deskripsi</h3>
+            <p id="drawerDesc" class="text-base leading-relaxed text-gray-700"></p>
         </div>
     </div>
     @else
@@ -95,6 +94,33 @@
 @endsection
 
 @push('scripts')
-<!-- Alpine.js for modal -->
-<script src="//unpkg.com/alpinejs" defer></script>
+<script>
+    function openDrawer(el) {
+        // Set isi konten
+        document.getElementById('drawerImage').src = el.dataset.gambar;
+        document.getElementById('drawerName').innerText = "Nama: " + el.dataset.nama;
+        document.getElementById('drawerBrand').innerText = "Brand: " + el.dataset.brand;
+        document.getElementById('drawerCategory').innerText = "Kategori: " + el.dataset.kategori;
+        document.getElementById('drawerStore').innerText = "Toko: " + el.dataset.toko;
+        document.getElementById('drawerOrigin').innerText = "Asal: " + el.dataset.asal;
+        document.getElementById('drawerDate').innerText = el.dataset.tanggal;
+        document.getElementById('drawerPrice').innerText = "Rp " + el.dataset.harga;
+        document.getElementById('drawerShipping').innerText = "Rp " + el.dataset.ongkir;
+        document.getElementById('drawerTotal').innerText = "Rp " + el.dataset.total;
+        document.getElementById('drawerDesc').innerText = el.dataset.deskripsi;
+
+        // Tampilkan drawer & overlay
+        document.getElementById('drawer').classList.remove('translate-x-full');
+        document.getElementById('drawer').classList.add('translate-x-0');
+        document.getElementById('drawer-overlay').classList.remove('hidden');
+    }
+
+    function closeDrawer() {
+        // Tutup animasi
+        document.getElementById('drawer').classList.add('translate-x-full');
+        document.getElementById('drawer').classList.remove('translate-x-0');
+        document.getElementById('drawer-overlay').classList.add('hidden');
+    }
+</script>
+
 @endpush
