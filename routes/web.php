@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminDashboardController;
 
+
 // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
@@ -27,6 +28,8 @@ Route::get('/items/create', [ItemController::class, 'create'])->name('items.crea
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
 
 Route::get('/admin/print-pdf', [AdminDashboardController::class, 'downloadPDF'])->name('admin.print-pdf');
+
+
 
 
 

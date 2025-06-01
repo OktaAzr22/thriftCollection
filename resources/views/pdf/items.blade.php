@@ -39,8 +39,8 @@
                     </td>
                     <td>{{ $item->created_at->format('d-m-Y') }}</td>
                     <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
-                    <td>{{ $item->kategori->nama_kategori ?? '-' }}</td>
-                    <td>{{ $item->brand->nama_brand ?? '-' }}</td>
+                    <td>{{ $item->kategori->nama ?? '-' }}</td>
+                    <td>{{ $item->brand->name ?? '-' }}</td>
                     <td>{{ $item->toko->asal ?? $item->toko->nama_toko ?? '-' }}</td>
                     <td>Rp {{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}</td>
                 </tr>
