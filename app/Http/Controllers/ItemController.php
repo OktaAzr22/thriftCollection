@@ -15,25 +15,51 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-       $items = Item::orderBy('created_at', 'desc')->get();
-    $tokos = Toko::all();
-    $brands = Brand::all();
-    $kategoris =Kategori::all();
-        return view('items.index', compact('items', 'kategoris', 'tokos', 'brands'));
+   public function index(Request $request)
+{
+    $query = Item::query();
+
+    // Search by nama
+    if ($request->filled('search')) {
+        $query->where('nama', 'like', '%' . $request->search . '%');
     }
+
+    // Allowed columns untuk sortir
+    $allowedSorts = ['nama', 'harga', 'ongkir', 'tanggal'];
+    $sort = $request->get('sort');
+    $direction = $request->get('direction') === 'desc' ? 'desc' : 'asc';
+
+    if (in_array($sort, $allowedSorts)) {
+        $query->orderBy($sort, $direction);
+    } else {
+        $query->orderBy('created_at', 'desc'); // default
+    }
+
+    $items = $query->with(['kategori', 'brand', 'toko'])
+                   ->paginate(3)
+                   ->withQueryString();
+
+    $kategori = Kategori::all();
+    $brand = Brand::all();
+    $toko = Toko::all();
+
+    return view('items.index', compact('items', 'kategori', 'brand', 'toko', 'sort', 'direction'));
+}
+
+
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('items.create', [
-            'tokos' => Toko::all(),
-            'brands' => Brand::all(),
-            'kategoris' => Kategori::all()
-        ]);
+         // Get necessary data for form
+        $brands = Brand::all();
+        $tokos = Toko::all();
+        $kategoris = Kategori::all();
+        
+        return view('items.create', compact('brands', 'tokos', 'kategoris'));
     }
 
     /**
@@ -42,7 +68,7 @@ class ItemController extends Controller
     public function store(Request $request)
     {
          $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama' => 'required|string|max:10',
             'harga' => 'required|numeric|min:0',
             'ongkir' => 'nullable|numeric|min:0',
             'toko_id' => 'required|exists:tokos,id',
@@ -70,7 +96,7 @@ class ItemController extends Controller
             'tanggal' => $request->tanggal ?? Carbon::now(),
         ]);
 
-        return redirect()->route('items.index')->with('success_swal', 'Item berhasil ditambahkan!');
+        return redirect()->route('items.create')->with('success_swal', 'Item berhasil ditambahkan!');
     }
 
     /**
