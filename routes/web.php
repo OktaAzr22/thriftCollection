@@ -21,12 +21,12 @@ Route::get('/toko', [TokoController::class, 'index'])->name('toko.index');
 Route::post('/toko', [TokoController::class, 'store'])->name('toko.store');
 Route::put('/toko/{toko}', [TokoController::class, 'update'])->name('toko.update');
 Route::delete('/toko/{toko}', [TokoController::class, 'destroy'])->name('toko.destroy');
-
 Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 Route::get('/brand/{brand}/items', [BrandController::class, 'items'])->name('brand.items');
-
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+
+Route::get('/admin/print-pdf', [AdminDashboardController::class, 'downloadPDF'])->name('admin.print-pdf');
 
 
 

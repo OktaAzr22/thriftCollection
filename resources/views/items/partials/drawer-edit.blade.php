@@ -10,9 +10,9 @@
     </div>
 
     <!-- Form -->
-    <form action="{{ route('items.update', $item->id) }}" method="POST" enctype="multipart/form-data" >
-      @csrf
-      @method('PUT')
+   <form action="{{ route('items.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+  @csrf
+  @method('PUT')  
 
       <div class="flex-1 px-6 py-4 space-y-4 overflow-y-auto">
         <!-- Nama -->
@@ -87,9 +87,11 @@
       </div>
 
       <!-- Footer -->
-      <div class="flex justify-end p-4 border-t rounded-b-lg bg-gray-50">
-        <button type="submit" class="px-6 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Simpan</button>
-      </div>
+    <div class="flex justify-end p-4 border-t rounded-b-lg bg-gray-50">
+    <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded">
+      Simpan
+    </button>
+  </div>
     </form>
   </div>
 </div>
