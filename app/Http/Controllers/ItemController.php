@@ -9,6 +9,7 @@ use App\Models\Toko;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class ItemController extends Controller
 {
@@ -36,7 +37,7 @@ class ItemController extends Controller
     }
 
     $items = $query->with(['kategori', 'brand', 'toko'])
-                   ->paginate(3)
+                   ->paginate(5)
                    ->withQueryString();
 
     $kategori = Kategori::all();
@@ -96,7 +97,7 @@ class ItemController extends Controller
             'tanggal' => $request->tanggal ?? Carbon::now(),
         ]);
 
-        return redirect()->route('items.create')->with('success_swal', 'Item berhasil ditambahkan!');
+        return redirect()->route('items.index')->with('success_swal', 'Item berhasil ditambahkan!');
     }
 
     /**
@@ -124,29 +125,42 @@ class ItemController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Item $item)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'harga' => 'required|numeric|min:0',
-            'ongkir' => 'nullable|numeric|min:0',
-            'toko_id' => 'required|exists:tokos,id',
-            'brand_id' => 'required|exists:brands,id',
-            'kategori_id' => 'required|exists:kategoris,id',
-            'gambar' => 'nullable|image|max:2048',
-            'deskripsi' => 'nullable|string',
-        ]);
+{
+    $data = $request->validate([
+        'nama'        => 'required|string|max:255',
+        'harga'       => 'required|numeric|min:0',
+        'ongkir'      => 'nullable|numeric|min:0',
+        'toko_id'     => 'required|exists:tokos,id',
+        'brand_id'    => 'required|exists:brands,id',
+        'kategori_id' => 'required|exists:kategoris,id',
+        'gambar'      => 'nullable|image|max:2048',
+        'deskripsi'   => 'nullable|string',
+        'tanggal'     => 'nullable|date',
+    ]);
 
-        if ($request->hasFile('gambar')) {
-            if ($item->gambar) {
-                Storage::disk('public')->delete($item->gambar);
-            }
-            $item->gambar = $request->file('gambar')->store('items', 'public');
+    // Handle hapus gambar
+    if ($request->filled('hapus_gambar') && $item->gambar) {
+        Storage::disk('public')->delete($item->gambar);
+        $data['gambar'] = null;
+    }
+
+    // Handle upload gambar baru
+    if ($request->hasFile('gambar')) {
+        if ($item->gambar && Storage::disk('public')->exists($item->gambar)) {
+            Storage::disk('public')->delete($item->gambar);
         }
 
-        $item->update($request->except('gambar') + ['gambar' => $item->gambar]);
+        $namaFile = Str::slug($data['nama']) . '_' . time() . '.' .
+                    $request->file('gambar')->getClientOriginalExtension();
 
-        return redirect()->route('items.index')->with('success', 'Item berhasil diperbarui!');
+        $data['gambar'] = $request->file('gambar')
+            ->storeAs('assets/img/uploads/gambar_item', $namaFile, 'public');
     }
+
+    $item->update($data);
+
+    return redirect()->route('items.index')->with('success', 'Item berhasil diperbarui!');
+}
 
     /**
      * Remove the specified resource from storage.

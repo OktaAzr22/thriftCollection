@@ -9,7 +9,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminDashboardController;
 
 // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-Route::resource('items', ItemController::class);
+
+
+Route::resource('items', ItemController::class)->except(['create', 'show']);
 route::resource('brands', BrandController::class)->except(['create','edit', 'show']);
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
 Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');

@@ -3,9 +3,11 @@
 @section('content')
 <div class="flex items-center justify-between mb-4">
     <h2 class="text-xl font-bold text-gray-700">Daftar Item</h2>
-    <button onclick="openDrawer()" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-        <i class="mr-2 fas fa-plus"></i>Tambah Item
-    </button>
+    <a href="{{ route('items.create') }}">
+        <button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+            <i class="mr-2 fas fa-plus"></i>Tambah Item
+        </button>
+    </a>
 </div>
 
 <!-- Form Search -->
@@ -22,42 +24,35 @@
 <div class="overflow-auto bg-white rounded shadow">
     <table class="min-w-full text-sm divide-y divide-gray-200">
         <thead class="bg-gray-50">
-    <tr>
-        <th class="px-4 py-2 font-semibold text-left text-gray-600">Gambar</th>
-        
-        <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
-            <a href="{{ request()->fullUrlWithQuery(['sort' => 'nama', 'direction' => ($sort === 'nama' && $direction === 'asc') ? 'desc' : 'asc']) }}">
-                Nama {!! ($sort === 'nama' ? ($direction === 'asc' ? '↑' : '↓') : '') !!}
-            </a>
-        </th>
-
-        <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
-            <a href="{{ request()->fullUrlWithQuery(['sort' => 'harga', 'direction' => ($sort === 'harga' && $direction === 'asc') ? 'desc' : 'asc']) }}">
-                Harga {!! ($sort === 'harga' ? ($direction === 'asc' ? '↑' : '↓') : '') !!}
-            </a>
-        </th>
-
-        <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
-            <a href="{{ request()->fullUrlWithQuery(['sort' => 'ongkir', 'direction' => ($sort === 'ongkir' && $direction === 'asc') ? 'desc' : 'asc']) }}">
-                Ongkir {!! ($sort === 'ongkir' ? ($direction === 'asc' ? '↑' : '↓') : '') !!}
-            </a>
-        </th>
-
-        <th class="px-4 py-2 font-semibold text-left text-gray-600">Total</th>
-
-        <th class="px-4 py-2 font-semibold text-left text-gray-600">Kategori</th>
-        <th class="px-4 py-2 font-semibold text-left text-gray-600">Brand</th>
-        <th class="px-4 py-2 font-semibold text-left text-gray-600">Toko</th>
-
-        <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
-            <a href="{{ request()->fullUrlWithQuery(['sort' => 'tanggal', 'direction' => ($sort === 'tanggal' && $direction === 'asc') ? 'desc' : 'asc']) }}">
-                Tanggal {!! ($sort === 'tanggal' ? ($direction === 'asc' ? '↑' : '↓') : '') !!}
-            </a>
-        </th>
-
-        <th class="px-4 py-2 font-semibold text-left text-gray-600">Aksi</th>
-    </tr>
-</thead>
+            <tr>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600">Gambar</th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'nama', 'direction' => (request('sort') === 'nama' && request('direction') === 'asc') ? 'desc' : 'asc']) }}">
+                        Nama {!! (request('sort') === 'nama' ? (request('direction') === 'asc' ? '↑' : '↓') : '') !!}
+                    </a>
+                </th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'harga', 'direction' => (request('sort') === 'harga' && request('direction') === 'asc') ? 'desc' : 'asc']) }}">
+                        Harga {!! (request('sort') === 'harga' ? (request('direction') === 'asc' ? '↑' : '↓') : '') !!}
+                    </a>
+                </th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'ongkir', 'direction' => (request('sort') === 'ongkir' && request('direction') === 'asc') ? 'desc' : 'asc']) }}">
+                        Ongkir {!! (request('sort') === 'ongkir' ? (request('direction') === 'asc' ? '↑' : '↓') : '') !!}
+                    </a>
+                </th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600">Total</th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600">Kategori</th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600">Brand</th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600">Toko</th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600 cursor-pointer">
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'tanggal', 'direction' => (request('sort') === 'tanggal' && request('direction') === 'asc') ? 'desc' : 'asc']) }}">
+                        Tanggal {!! (request('sort') === 'tanggal' ? (request('direction') === 'asc' ? '↑' : '↓') : '') !!}
+                    </a>
+                </th>
+                <th class="px-4 py-2 font-semibold text-left text-gray-600">Aksi</th>
+            </tr>
+        </thead>
 
         <tbody class="divide-y divide-gray-100">
             @forelse($items as $item)
@@ -78,8 +73,13 @@
                 <td class="px-4 py-2">{{ $item->toko->nama }}</td>
                 <td class="px-4 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}</td>
                 <td class="px-4 py-2 space-x-2">
-                    <button onclick="openModal('view-{{ $item->id }}')" class="text-blue-500 hover:underline"><i class="fas fa-eye"></i></button>
-                    <button onclick="openModal('edit-{{ $item->id }}')" class="text-yellow-500 hover:underline"><i class="fas fa-edit"></i></button>
+                    <button onclick="openDrawer('drawer-view-{{ $item->id }}')" class="text-blue-500 hover:underline">
+    <i class="fas fa-eye"></i>
+</button>
+
+                    <button onclick="openDrawer('drawer-edit-{{ $item->id }}')" class="px-3 py-1 text-white bg-blue-600 rounded hover:bg-blue-700">
+                        Edit
+                    </button>
                     <form method="POST" action="{{ route('items.destroy', $item->id) }}" class="inline form-delete" data-jenis="item">
                         @csrf @method('DELETE')
                         <button type="submit" class="text-red-500 hover:underline"><i class="fas fa-trash"></i></button>
@@ -87,8 +87,10 @@
                 </td>
             </tr>
 
-            @include('items.partials.modal-view', ['item' => $item])
-            @include('items.partials.modal-edit', ['item' => $item])
+            {{-- Include modal view dan drawer edit sebagai partial --}}
+           @include('items.partials.drawer-view', ['item' => $item])
+
+            @include('items.partials.drawer-edit', ['item' => $item, 'tokos' => $toko, 'brands' => $brand, 'kategoris' => $kategori])
             @empty
             <tr>
                 <td colspan="10" class="px-4 py-6 italic text-center text-gray-500">Data item tidak ditemukan.</td>
@@ -96,16 +98,64 @@
             @endforelse
         </tbody>
     </table>
-</div>
-<div class="flex items-center justify-between mt-4 text-sm text-gray-600">
-    <div>
-        Menampilkan {{ $items->firstItem() }} sampai {{ $items->lastItem() }} dari total {{ $items->total() }} item
-    </div>
-    <div>
-        {{ $items->links() }}
-    </div>
-</div>
 
-
-@include('items.partials.drawer-create')
+    <div class="flex items-center justify-between mt-4 text-sm text-gray-600">
+        <div>
+            Menampilkan {{ $items->firstItem() }} sampai {{ $items->lastItem() }} dari total {{ $items->total() }} item
+        </div>
+        <div>
+            {{ $items->links() }}
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+   function openDrawer(id) {
+    const drawer = document.getElementById(id);
+    drawer.classList.remove('opacity-0', 'pointer-events-none');
+    const content = drawer.querySelector('.transform');
+    if (id.startsWith('drawer-view')) {
+      content.classList.remove('-translate-x-full');
+    } else {
+      content.classList.remove('translate-x-full');
+    }
+  }
+
+  function closeDrawer(id) {
+    const drawer = document.getElementById(id);
+    const content = drawer.querySelector('.transform');
+    if (id.startsWith('drawer-view')) {
+      content.classList.add('-translate-x-full');
+    } else {
+      content.classList.add('translate-x-full');
+    }
+    drawer.classList.add('opacity-0', 'pointer-events-none');
+  }
+
+  function handleOverlayClick(event, id) {
+    // Kalau kliknya di luar drawer (overlay), maka tutup drawer
+    if (event.target.id === id) {
+      closeDrawer(id);
+    }
+  }
+
+  function previewImage(event, previewId) {
+    const reader = new FileReader();
+    const imageField = document.getElementById(previewId);
+    reader.onload = function () {
+      imageField.src = reader.result;
+      imageField.classList.remove('hidden');
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  function openModal(id) {
+    document.getElementById(id).classList.remove('hidden');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+  }
+</script>
+@endpush
