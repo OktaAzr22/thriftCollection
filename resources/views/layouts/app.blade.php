@@ -108,58 +108,18 @@
                </div>
       </header> 
       <div class="flex flex-1 overflow-hidden">
-         <!-- Sidebar -->
-         <div class="flex flex-col h-full px-2 py-4 bg-white shadow-md sidebar">
-            <div class="flex items-center justify-between px-3 mb-6">
-            <h2 class="text-lg font-bold sidebar-text whitespace-nowrap">MyApp</h2>
-            <button onclick="toggleSidebar()" class="text-gray-500 transition-colors hover:text-black">
-               <i id="collapseIcon" class="fas fa-angle-double-left"></i>
-            </button>
-            </div>
-            <nav class="flex-1 space-y-2">
-            <a
-               href="{{ url('/') }}"
-               class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
-               <i class="w-5 text-center fas fa-home"></i>
-               <span class="sidebar-text whitespace-nowrap">Dashboard</span>
-            </a>
-            <a
-               href="{{ route('brands.index') }}"
-               class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
-               <i class="w-5 text-center fas fa-box"></i>
-               <span class="sidebar-text whitespace-nowrap">Brands</span>
-            </a>
-            <a href="{{ route('kategori.index') }}"class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
-               <i class="w-5 text-center fas fa-box"></i>
-               <span class="sidebar-text whitespace-nowrap">Kategori</span>
-            </a>
-            <a href="{{ route('toko.index') }}"class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
-               <i class="w-5 text-center fas fa-box"></i>
-               <span class="sidebar-text whitespace-nowrap">Toko</span>
-            </a>
-            <a href="{{ route('items.index') }}"class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
-               <i class="w-5 text-center fas fa-box"></i>
-               <span class="sidebar-text whitespace-nowrap">Item</span>
-            </a>
-            
-             
-            </nav>
-            <div class="px-3 py-2 border-t">
-               <div class="flex items-center gap-3">
-                  <img  alt="User" class="w-8 h-8 rounded-full">
-                  <div class="sidebar-text">
-                     <p class="text-sm font-medium whitespace-nowrap">Admin Master</p>
-                     <p class="text-xs text-gray-500 whitespace-nowrap">Admin</p>
-                  </div>
-               </div>
-            </div>
-         </div>
+         @include('partials.sidebar')
          <main class="flex flex-col flex-1 p-6 space-y-4 ">
             @yield('content')
             
          </main>
       </div>    
   </div>
+  @include('partials.modals.tambah_kategori')
+  @include('partials.modals.view_kategori')
+
+
+
   
   
   <script>
@@ -228,17 +188,43 @@
   <script>
    function openModal(id) {
       const modal = document.getElementById(`modal-${id}`);
-      modal.classList.remove('hidden', 'pointer-events-none', 'opacity-0');
-      setTimeout(() => modal.classList.add('opacity-100'), 10);
+      modal.classList.remove('hidden', 'pointer-events-none');
+      setTimeout(() => {
+         modal.classList.remove('opacity-0');
+         modal.classList.add('opacity-100');
+         modal.firstElementChild.classList.remove('scale-95');
+         modal.firstElementChild.classList.add('scale-100');
+      }, 10);
    }
 
    function closeModal(id) {
-      const modal = document.getElementById(`modal-${id}`);
-      modal.classList.remove('opacity-100');
-      setTimeout(() => {
-         modal.classList.add('opacity-0', 'pointer-events-none', 'hidden');
-      }, 200);
-   }
+   const modal = document.getElementById(`modal-${id}`);
+
+   modal.classList.remove('opacity-100');
+   modal.classList.add('opacity-0');
+   modal.firstElementChild.classList.remove('scale-100');
+   modal.firstElementChild.classList.add('scale-95');
+
+   setTimeout(() => {
+      modal.classList.add('hidden', 'pointer-events-none');
+      
+      // 🔁 Reload jika sebelumnya ada error validasi
+      if (typeof hasValidationError !== 'undefined' && hasValidationError) {
+         location.reload();
+      }
+   }, 300);
+}
+
+
+   document.addEventListener('click', function(e) {
+      document.querySelectorAll('[id^="modal-"]').forEach(modal => {
+         if (!modal.classList.contains('hidden') && e.target === modal) {
+            closeModal(modal.id.replace('modal-', ''));
+         }
+      });
+   });
+  
+
 </script>
 
   <!-- drawer -->

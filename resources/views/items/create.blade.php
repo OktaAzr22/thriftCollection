@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
+        <a href="{{ url()->previous() }}">
+                <button class="flex items-center gap-2 text-gray-600 hover:text-black">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="text-sm font-medium">Kembali</span>
+                </button>
+            </a>
         <!-- Progress Steps Indicator -->
         <div class="flex justify-center mb-8">
             <div class="flex items-center">

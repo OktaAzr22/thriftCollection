@@ -206,7 +206,7 @@
 </div>
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
 <script>
    function openModal(id) {
       const modal = document.getElementById(`modal-${id}`);
@@ -241,4 +241,4 @@
    });
 
 </script>
-@endpush
+@endpush --}}

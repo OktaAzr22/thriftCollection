@@ -85,6 +85,7 @@ class AppServiceProvider extends ServiceProvider
 
         $view->with('allNotifications', $allNotifications);
         $view->with('totalNotifications', $allNotifications->count());
+    $view->with('kategoris', Kategori::all());
     });
 }
 }
