@@ -1,0 +1,134 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="p-4 bg-white rounded-lg shadow-lg">
+    @if($items->count() > 0)
+    <div class="flex items-start justify-between mb-4">
+        <div>
+            <a href="{{ url()->previous() }}">
+                <button class="flex items-center gap-2 text-gray-600 hover:text-black">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="text-sm font-medium">Kembali</span>
+                </button>
+            </a>
+        </div>
+        <span class="px-4 py-1 text-sm text-gray-600 bg-gray-100 rounded-full shadow">{{ $items->count() }} items available</span>
+    </div>
+
+    <hr>
+    <h3 class="mb-4 text-gray-900">List {{ $brand->name }}</h3>
+
+    <div class="grid grid-rows-2 auto-cols-[13rem] grid-flow-col gap-6 overflow-x-auto p-3 max-w-full scrollbar-hide">
+        @foreach($items as $item)
+        <div onclick="openDrawer(this)"
+            class="overflow-hidden transition-transform rounded-lg shadow-lg cursor-pointer w-52 h-52 group hover:scale-105"
+            data-nama="{{ $item->nama }}"
+            data-brand="{{ $item->brand->name }}"
+            data-kategori="{{ $item->kategori->nama ?? 'General' }}"
+            data-toko="{{ $item->toko->nama ?? 'Unknown Store' }}"
+            data-asal="{{ $item->toko->asal ?? 'Not Found' }}"
+            data-tanggal="{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}"
+            data-harga="{{ number_format($item->harga) }}"
+            data-ongkir="{{ number_format($item->ongkir) }}"
+            data-total="{{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}"
+            data-deskripsi="{{ $item->deskripsi ?? 'Tidak ada deskripsi.' }}"
+            data-gambar="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
+        >
+            <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://via.placeholder.com/300x200?text=No+Image' }}" alt="{{ $item->nama }}" class="object-cover w-full h-full transition duration-300 group-hover:grayscale" />
+        </div>
+        @endforeach
+    </div>
+
+    <!-- Overlay -->
+    <div id="drawer-overlay" class="fixed inset-0 z-40 hidden bg-black bg-opacity-40" onclick="closeDrawer()"></div>
+
+    <!-- Drawer -->
+    <div id="drawer" class="fixed top-10 right-0 w-[30rem] h-[90%] bg-white shadow-2xl rounded-2xl z-50 p-0 overflow-hidden
+        transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+
+        <div class="sticky top-0 z-10 flex items-center justify-between px-6 pt-6 pb-4 bg-white border-b">
+            <h2 class="text-xl font-semibold text-gray-800">Detail Produk</h2>
+            <button onclick="closeDrawer()" class="text-2xl text-gray-400 hover:text-red-500">&times;</button>
+        </div>
+
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <div class="flex gap-6 px-6 py-4 overflow-y-auto">
+                <!-- Gambar kiri -->
+                <div class="flex-shrink-0">
+                    <img id="drawerImage" src="" alt="Image" class="rounded-lg shadow-md max-w-[8rem] max-h-[8rem] object-contain" />
+                </div>
+
+                <!-- Info kanan -->
+                <div class="flex flex-col justify-between flex-1 text-sm text-gray-700">
+                    <div>
+                        <p id="drawerName" class="mb-1 text-lg font-semibold text-gray-800"></p>
+                        <p id="drawerBrand" class="mb-1"></p>
+                        <p id="drawerCategory" class="mb-1"></p>
+                        <p id="drawerStore" class="mb-1"></p>
+                        <p id="drawerOrigin" class="mb-1"></p>
+                        <p>
+                            <span class="font-medium text-gray-600">Tanggal:</span>
+                            <span id="drawerDate" class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"></span>
+                        </p>
+                    </div>
+
+                    <div class="flex justify-between gap-4 mt-4 text-sm text-gray-700">
+                        <p><span class="font-medium text-gray-600">Harga:</span><br><span id="drawerPrice" class="font-semibold text-green-600"></span></p>
+                        <p><span class="font-medium text-gray-600">Ongkir:</span><br><span id="drawerShipping" class="font-semibold text-blue-600"></span></p>
+                    </div>
+
+                    <div class="flex justify-between pt-2 mt-4 text-sm font-semibold text-red-600 border-t">
+                        <p>Total</p>
+                        <p id="drawerTotal" class="text-lg font-bold"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deskripsi -->
+            <div class="px-6 py-4 mt-auto overflow-y-auto border-t">
+                <h3 class="mb-2 text-sm font-semibold text-gray-600 uppercase">Deskripsi</h3>
+                <p id="drawerDesc" class="text-gray-700 whitespace-pre-line"></p>
+            </div>
+        </div>
+    </div>
+
+    @else
+    <x-empty-message 
+        title="Oops, Data Tidak Ditemukan!" 
+        message="Maaf, produk untuk brand ini belum tersedia." 
+        button-text="Back" 
+        button-url="{{ route('brands.index') }}"/>
+    @endif
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    function openDrawer(el) {
+        // Set isi konten
+        document.getElementById('drawerImage').src = el.dataset.gambar;
+        document.getElementById('drawerName').innerText = "Nama: " + el.dataset.nama;
+        document.getElementById('drawerBrand').innerText = "Brand: " + el.dataset.brand;
+        document.getElementById('drawerCategory').innerText = "Kategori: " + el.dataset.kategori;
+        document.getElementById('drawerStore').innerText = "Toko: " + el.dataset.toko;
+        document.getElementById('drawerOrigin').innerText = "Asal: " + el.dataset.asal;
+        document.getElementById('drawerDate').innerText = el.dataset.tanggal;
+        document.getElementById('drawerPrice').innerText = "Rp " + el.dataset.harga;
+        document.getElementById('drawerShipping').innerText = "Rp " + el.dataset.ongkir;
+        document.getElementById('drawerTotal').innerText = "Rp " + el.dataset.total;
+        document.getElementById('drawerDesc').innerText = el.dataset.deskripsi;
+
+        // Tampilkan drawer & overlay
+        document.getElementById('drawer').classList.remove('translate-x-full');
+        document.getElementById('drawer').classList.add('translate-x-0');
+        document.getElementById('drawer-overlay').classList.remove('hidden');
+    }
+
+    function closeDrawer() {
+        // Tutup animasi
+        document.getElementById('drawer').classList.add('translate-x-full');
+        document.getElementById('drawer').classList.remove('translate-x-0');
+        document.getElementById('drawer-overlay').classList.add('hidden');
+    }
+</script>
+@endpush

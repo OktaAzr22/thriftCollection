@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .sidebar {
+      width: 16rem;
+      transition: all 0.3s ease;
+    }
+    .sidebar-collapsed .sidebar {
+      width: 4rem;
+    }
+    .sidebar-collapsed .sidebar-text {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      transition: opacity 0.2s ease, width 0.3s ease 0.1s;
+    }
+    .sidebar-text {
+      opacity: 1;
+      width: auto;
+      height: auto;
+      transition: opacity 0.3s ease 0.1s, width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="h-screen overflow-hidden font-sans bg-gray-100">
+  <div class="flex flex-col h-full">
+      <header class="sticky top-0 z-20 flex items-center justify-between w-full px-6 py-3 bg-white shadow">
+            <div class="flex items-center gap-3">
+               <button onclick="toggleSidebar()" class="text-gray-500 transition-colors duration-200 hover:text-black md:hidden">
+                  <i class="text-lg fas fa-bars"></i>
+               </button>
+               <h1 class="text-lg font-semibold text-gray-800">Product Management</h1>
+            </div>
+      </header> 
+      <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <div class="flex flex-col h-full px-2 py-4 bg-white shadow-md sidebar">
+            <div class="flex items-center justify-between px-3 mb-6">
+            <h2 class="text-lg font-bold sidebar-text whitespace-nowrap">MyApp</h2>
+            <button onclick="toggleSidebar()" class="text-gray-500 transition-colors duration-200 hover:text-black">
+               <i id="collapseIcon" class="fas fa-angle-double-left"></i>
+            </button>
+            </div>
+            <nav class="flex-1 space-y-2">
+              <a
+                href="{{ url('/') }}"
+                class="flex items-center gap-3 px-3 py-2 rounded nav-item hover:bg-gray-100">
+                <i class="w-5 text-center fas fa-home"></i>
+                <span class="sidebar-text whitespace-nowrap">Dashboard</span>
+              </a>       
+            </nav>
+            <div class="px-3 py-2 border-t">
+               <div class="flex items-center gap-3">
+                  <img  alt="User" class="w-8 h-8 rounded-full">
+                  <div class="sidebar-text">
+                     <p class="text-sm font-medium whitespace-nowrap">Admin Master</p>
+                     <p class="text-xs text-gray-500 whitespace-nowrap">Admin</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <main class="flex flex-col flex-1 p-6 space-y-4 overflow-hidden">
+          <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
+            <div class="flex flex-col justify-between mb-4 space-y-3 md:flex-row md:items-center md:space-y-0">
+              <h2 class="text-xl font-semibold text-gray-800">Product List</h2>
+              <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <i class="text-gray-400 fas fa-search"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    class="w-[200px] py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 focus:w-[250px] transition-all duration-300" 
+                    placeholder="Search products..."
+                  >
+                </div>
+                <button class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  <i class="mr-2 fas fa-plus"></i> Add Product
+                </button>
+              </div>
+            </div>
+            
+            <!-- Table Container with Scroll -->
+            <div class="max-h-[calc(100vh-250px)] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 hover:[&::-webkit-scrollbar-thumb]:bg-gray-400">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="sticky top-0 z-10 bg-gray-50">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                      Name
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                      Price
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                      Total Price
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                      Category
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                      Brand
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                      Store
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+                          <img class="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100&q=80" alt="Product">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">Apple MacBook Pro</div>
+                          <div class="text-sm text-gray-500">May 15, 2023</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">$1,299</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-semibold text-gray-900">$1,399</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                        Laptop
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Apple</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Tech Store</div>
+                    </td>
+                    
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                      <div class="flex justify-end space-x-1">
+                        <button class="p-2 text-blue-600 bg-blue-100 rounded-md hover:bg-blue-200" title="View">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="p-2 text-yellow-600 bg-yellow-100 rounded-md hover:bg-yellow-200" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="p-2 text-red-600 bg-red-100 rounded-md hover:bg-red-200" title="Delete">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr> 
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+              <div class="flex justify-between flex-1 sm:hidden">
+                <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                  Previous
+                </a>
+                <a href="#" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                  Next
+                </a>
+              </div>
+              <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p class="text-sm text-gray-700">
+                    Showing
+                    <span class="font-medium">1</span>
+                    to
+                    <span class="font-medium">6</span>
+                    of
+                    <span class="font-medium">24</span>
+                    results
+                  </p>
+                </div>
+                <div>
+                  <nav class="inline-flex -space-x-px rounded-md shadow-sm isolate" aria-label="Pagination">
+                    <a href="#" class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 focus:z-20">
+                      <span class="sr-only">Previous</span>
+                      <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <a href="#" aria-current="page" class="relative z-10 inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 border border-blue-500 bg-blue-50 focus:z-20">
+                      1
+                    </a>
+                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:z-20">
+                      2
+                    </a>
+                    <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300">
+                      ...
+                    </span>
+                    <a href="#" class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 focus:z-20">
+                      <span class="sr-only">Next</span>
+                      <i class="fas fa-chevron-right"></i>
+                    </a>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+         </main>
+      </div>    
+  </div>
+  
+  <script>
+    function toggleSidebar() {
+      document.body.classList.toggle('sidebar-collapsed');
+      const icon = document.getElementById('collapseIcon');
+      if (document.body.classList.contains('sidebar-collapsed')) {
+        icon.classList.remove('fa-angle-double-left');
+        icon.classList.add('fa-angle-double-right');
+      } else {
+        icon.classList.remove('fa-angle-double-right');
+        icon.classList.add('fa-angle-double-left');
+      }
+    }
+  </script>
+</body>
+</html>
