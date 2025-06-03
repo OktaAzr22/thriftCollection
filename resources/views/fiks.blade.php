@@ -97,7 +97,8 @@
          
             <!-- Table Container -->
             <div class="flex flex-col ">
-              <div class="overflow-auto border border-gray-200 rounded-lg scrollbar-hide" style="max-height: calc(100vh - 420px);">
+<div class="overflow-auto border border-gray-200 rounded-lg scrollbar-hidden" style="max-height: calc(100vh - 420px); ">
+
                 <table class="min-w-full divide-y divide-gray-200">
                   <thead class="sticky top-0 bg-gray-50">
                     <tr>

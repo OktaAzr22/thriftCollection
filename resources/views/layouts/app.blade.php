@@ -27,6 +27,14 @@
       height: auto;
       transition: opacity 0.3s ease 0.1s, width 0.3s ease;
     }
+    .scroll-hidden {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
     
   </style>
   @stack('styles')
@@ -115,8 +123,8 @@
          </main>
       </div>    
   </div>
-  @include('partials.modals.tambah_kategori')
-  @include('partials.modals.view_kategori')
+  {{-- @include('partials.modals.tambah_kategori')
+  @include('partials.modals.view_kategori') --}}
 
 
 

@@ -22,7 +22,7 @@ class TokoController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'nama' => 'required|min:1|max:50',
+            'nama' => 'required|min:1|max:10',
             'asal' => 'required|min:2|max:50',
             'deskripsi' => 'nullable|max:255',
         ]);

@@ -31,28 +31,7 @@
                <i class="w-5 text-center fas fa-box"></i>
                <span class="sidebar-text whitespace-nowrap">Item</span>
             </a>
-            <ul>
-        <li class="mb-2">
-            <details class="group">
-                <summary class="font-medium text-blue-700 cursor-pointer">
-                    Kategori
-                </summary>
-                <ul class="mt-2 ml-4 space-y-1">
-                    <li>
-   <button
-      onclick="openModal('TambahKategori')"
-      class="text-sm text-green-600 hover:underline"
-   >
-      Tambah Kategori
-   </button>
-</li>
-<li>
-  <button onclick="openModal('DataKategori')" class="px-4 py-2 text-white bg-blue-600 rounded">
-      Lihat Data Kategori
-   </button>
-
-</li>
-                </ul>
+           
             </details>
         </li>
     </ul>

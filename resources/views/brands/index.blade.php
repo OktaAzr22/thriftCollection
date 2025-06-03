@@ -57,7 +57,7 @@
     </div>
 
     <!-- Table Container -->
-    <div class="overflow-auto border border-gray-200 rounded-lg">
+    <div class="overflow-auto border border-gray-200 rounded-lg scroll-hidden">
         <table class="min-w-full text-sm bg-white divide-y divide-gray-200">
             <thead class="sticky top-0 z-10 text-xs text-left text-gray-500 uppercase bg-gray-100">
                 <tr>
