@@ -1,18 +1,14 @@
+
+
+
+
 @extends('layouts.app')
 
 @section('content')
 <x-alert />
 
 <!-- Global Error Display -->
-@if ($errors->any())
-<div class="p-4 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
-    <ul class="ml-4 text-sm list-disc">
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+
 
 <!-- Form Tambah Toko -->
 <div class="p-6 mb-6 bg-white rounded-lg shadow">
@@ -60,7 +56,10 @@
         <h2 class="text-xl font-semibold text-gray-800">List Toko</h2>
         <form method="GET" action="{{ route('toko.index') }}">
             <div class="relative">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama toko..." class="px-4 py-2 text-sm border border-gray-300 rounded-lg sm:w-64">
+                <input type="text" 
+                        name="search" 
+                        value="{{ old('search', $search) }}"
+                        placeholder="Cari nama toko..." class="px-4 py-2 text-sm border border-gray-300 rounded-lg sm:w-64">
                 @if(request('search'))
                 <button type="button" onclick="clearSearch()" class="absolute text-gray-400 right-2 top-2 hover:text-gray-600" title="Hapus pencarian">
                     ✕
@@ -90,6 +89,7 @@
                     <th class="px-6 py-3 font-medium bg-gray-100">Nama</th>
                 <th class="px-6 py-3 font-medium bg-gray-100">Asal</th>
                 <th class="px-6 py-3 font-medium bg-gray-100">Deskripsi</th>
+                <th class="px-6 py-3 font-medium bg-gray-100">Ongkir</th>
                 <th class="px-6 py-3 font-medium text-right bg-gray-100">Action</th>
                 </tr>
             </thead>
@@ -99,6 +99,14 @@
                     <td class="px-6 py-4 font-medium text-gray-900">{{ $toko->nama }}</td>
                     <td class="px-6 py-4">{{ $toko->asal ?? '-' }}</td>
                     <td class="px-6 py-4">{{ $toko->deskripsi ?? '-' }}</td>
+                    <td class="px-6 py-4">
+                        @if ($toko->items_max_ongkir !== null)
+                             Rp {{ number_format($toko->items_max_ongkir, 0, ',', '.') }}
+                        @else
+                            Belum ada data ongkir
+                        @endif
+                    </td>
+
                     <td class="px-6 py-4 space-x-2 text-right">
                         <button onclick="openModal('{{ $toko->id }}')" class="px-3 py-1 text-yellow-600 border rounded hover:bg-yellow-50">Edit</button>
                         <form action="{{ route('toko.destroy', $toko->id) }}" method="POST" class="inline form-delete">

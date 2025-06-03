@@ -12,23 +12,64 @@
         <i class="fas fa-times"></i>
       </button>
     </div>
+    
 
     <!-- Content -->
-    <div class="flex-1 px-6 py-4 space-y-4 overflow-y-auto">
-      <div><strong>Nama:</strong> <p>{{ $item->nama }}</p></div>
-      <div><strong>Harga:</strong> <p>Rp{{ number_format($item->harga, 0, ',', '.') }}</p></div>
-      <div><strong>Ongkir:</strong> <p>Rp{{ number_format($item->ongkir, 0, ',', '.') }}</p></div>
-      <div><strong>Total:</strong> <p>Rp{{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}</p></div>
-      <div><strong>Kategori:</strong> <p>{{ $item->kategori->nama }}</p></div>
-      <div><strong>Brand:</strong> <p>{{ $item->brand->name }}</p></div>
-      <div><strong>Toko:</strong> <p>{{ $item->toko->nama }}</p></div>
-      <div><strong>Tanggal:</strong> <p>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}</p></div>
-
+    <div class="flex-1 p-6 overflow-y-auto">
+      <!-- Image -->
       @if($item->gambar)
       <div>
         <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama }}" class="object-contain w-full rounded max-h-60" />
       </div>
       @endif
+      
+      <!-- Details Grid -->
+      <div class="grid grid-cols-1 gap-4">
+        <div class="p-4 rounded-lg bg-gray-50">
+          <h3 class="text-sm font-medium text-gray-500">Nama Produk</h3>
+          <p class="mt-1 text-lg font-semibold text-gray-900">{{ $item->nama }}</p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-4 rounded-lg bg-gray-50">
+            <h3 class="text-sm font-medium text-gray-500">Harga</h3>
+            <p class="mt-1 text-lg font-semibold text-gray-900">Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
+          </div>
+          
+          <div class="p-4 rounded-lg bg-gray-50">
+            <h3 class="text-sm font-medium text-gray-500">Ongkir</h3>
+            <p class="mt-1 text-lg font-semibold text-gray-900">Rp{{ number_format($item->ongkir, 0, ',', '.') }}</p>
+          </div>
+        </div>
+        
+        <div class="p-4 rounded-lg bg-blue-50">
+          <h3 class="text-sm font-medium text-blue-600">Total</h3>
+          <p class="mt-1 text-xl font-bold text-blue-800">Rp{{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}</p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-4 rounded-lg bg-gray-50">
+            <h3 class="text-sm font-medium text-gray-500">Kategori</h3>
+            <p class="mt-1 font-medium text-gray-900">{{ $item->kategori->nama }}</p>
+          </div>
+          
+          <div class="p-4 rounded-lg bg-gray-50">
+            <h3 class="text-sm font-medium text-gray-500">Brand</h3>
+            <p class="mt-1 font-medium text-gray-900">{{ $item->brand->name }}</p>
+          </div>
+        </div>
+        
+        <div class="p-4 rounded-lg bg-gray-50">
+          <h3 class="text-sm font-medium text-gray-500">Toko</h3>
+          <p class="mt-1 font-medium text-gray-900">{{ $item->toko->nama }}</p>
+        </div>
+        
+        <div class="p-4 rounded-lg bg-gray-50">
+          <h3 class="text-sm font-medium text-gray-500">Tanggal Pembelian</h3>
+          <p class="mt-1 font-medium text-gray-900">{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}</p>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>

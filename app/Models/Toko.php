@@ -13,4 +13,8 @@ class Toko extends Model
         'asal',
         'deskripsi',
     ];
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'toko_id');
+    }
 }

@@ -9,38 +9,51 @@ use Illuminate\Database\QueryException;
 
 class TokoController extends Controller
 {
-   public function index(Request $request) {
-        $search = $request->search;
-        $tokos = Toko::when($request->search, function ($query) use ($request) {
-            $query->where('nama', 'like', '%' . $request->search . '%');
-        })->paginate(5); // pagination 5 per halaman
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
 
-        $totalToko = Toko::count();
+        $query = Toko::withMax('items', 'ongkir');
 
-        return view('toko.index', compact('tokos', 'totalToko'));
-   }
+        if ($search) {
+            $query->where('nama', 'like', "%{$search}%")
+                ->orWhere('asal', 'like', "%{$search}%")
+                ->orWhere('deskripsi', 'like', "%{$search}%");
+        }
 
-    public function store(Request $request) {
-        $request->validate([
-            'nama' => 'required|min:1|max:10',
-            'asal' => 'required|min:2|max:50',
-            'deskripsi' => 'nullable|max:255',
-        ]);
+        $tokos = $query->orderByDesc('items_max_ongkir')->paginate(5)->withQueryString();
 
-        Toko::create($request->all());
+        return view('toko.index', compact('tokos', 'search'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+        'nama' => 'required|string|min:3|unique:tokos,nama',
+        'asal' => 'required|string|min:3',
+        'deskripsi' => 'nullable|string',
+    ], [
+        'nama.required' => 'Nama toko wajib diisi.',
+        'nama.min' => 'Nama toko minimal 3 huruf.',
+        'nama.unique' => 'Nama toko sudah terdaftar.',
+        'asal.required' => 'Asal toko wajib diisi.',
+        'asal.min' => 'Asal toko minimal 3 huruf.',
+    ]);
+
+    Toko::create($validated);
 
         return redirect()->route('toko.index')->with('success_swal', 'Toko berhasil ditambahkan');
     }
 
-
     public function update(Request $request, Toko $toko) {
-        $request->validate([
-            'nama' => 'required|min:1|max:50',
-            'asal' => 'required|min:2|max:50',
-            'deskripsi' => 'nullable|max:255',
-        ]);
+        $validated = $request->validate([
+        'nama' => 'required|string|min:3|unique:tokos,nama,' . $toko->id,
+        'asal' => 'required|string|min:3',
+        'deskripsi' => 'nullable|string',
+    ]);
 
-        $toko->update($request->all());
+    $toko->update($validated);
 
         return redirect()->route('toko.index')->with('alert', ['type' => 'info', 'message' => 'Toko berhasil diperbarui!', 'timeout' => 3500,]);
     }
