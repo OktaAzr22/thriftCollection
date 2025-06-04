@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained('brands')->onDelete('restrict');
             $table->foreignId('kategori_id')->constrained('kategoris')->onDelete('restrict');
             $table->string('gambar')->nullable();
+            $table->date('tanggal')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });

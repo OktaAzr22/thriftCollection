@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<x-alert />
     <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
         <a href="{{ url()->previous() }}">
                 <button class="flex items-center gap-2 text-gray-600 hover:text-black">

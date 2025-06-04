@@ -120,7 +120,7 @@
                                  </div>
                                  <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $item->nama }}</div>
-                                    <div class="text-sm text-gray-500">{{ $item->created_at->format('d-m-Y') }}</div>
+                                    <div class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}</div>
                                  </div>
                               </div>
                            </td>

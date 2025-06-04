@@ -159,7 +159,12 @@ class ItemController extends Controller
 
     $item->update($data);
 
-    return redirect()->route('items.index')->with('success', 'Item berhasil diperbarui!');
+    return redirect()->route('items.index')->with('alert', [
+            'type'    => 'success',
+            'title'   => 'Item',
+            'message' => 'berhasil diperbarui!',
+            'timeout' => 3500
+        ]);
 }
 
     /**
@@ -173,6 +178,10 @@ class ItemController extends Controller
 
         $item->delete();
 
-        return redirect()->route('items.index')->with('success', 'Item berhasil dihapus!');
+        return redirect()->route('items.index')->with('alert', [
+            'type'    => 'info',
+            'message' => 'Item Berhasil dihapus!',
+            'timeout' => 3500
+        ]);
     }
 }

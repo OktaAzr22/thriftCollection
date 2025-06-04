@@ -206,39 +206,4 @@
 </div>
 @endsection
 
-{{-- @push('scripts')
-<script>
-   function openModal(id) {
-      const modal = document.getElementById(`modal-${id}`);
-      modal.classList.remove('hidden', 'pointer-events-none');
-      setTimeout(() => {
-         modal.classList.remove('opacity-0');
-         modal.classList.add('opacity-100');
-         modal.firstElementChild.classList.remove('scale-95');
-         modal.firstElementChild.classList.add('scale-100');
-      }, 10);
-   }
 
-   function closeModal(id) {
-      const modal = document.getElementById(`modal-${id}`);
-
-      modal.classList.remove('opacity-100');
-      modal.classList.add('opacity-0');
-      modal.firstElementChild.classList.remove('scale-100');
-      modal.firstElementChild.classList.add('scale-95');
-
-      setTimeout(() => {
-         modal.classList.add('hidden', 'pointer-events-none');
-      }, 300);
-   }
-
-   document.addEventListener('click', function(e) {
-      document.querySelectorAll('[id^="modal-"]').forEach(modal => {
-         if (!modal.classList.contains('hidden') && e.target === modal) {
-            closeModal(modal.id.replace('modal-', ''));
-         }
-      });
-   });
-
-</script>
-@endpush --}}

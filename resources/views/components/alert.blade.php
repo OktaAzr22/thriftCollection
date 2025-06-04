@@ -1,8 +1,14 @@
-@props(['type' => 'success', 'message' => null, 'timeout' => 3000])
+@props([
+    'type' => 'success', 
+    'title' => null,     
+    'message' => null, 
+    'timeout' => 3000
+])
 
 @if(session('alert'))
     @php
         $type    = session('alert.type',     $type);
+        $title   = session('alert.title',    $title);
         $message = session('alert.message',  $message);
         $timeout = session('alert.timeout',  $timeout);
     @endphp
@@ -23,10 +29,13 @@
 <div id="{{ $id }}"
      class="fixed top-4 right-4 w-80 rounded-lg shadow-lg text-white overflow-hidden {{ $c['bg'] }} animate-slide-in z-50"
      role="alert">
-    <div class="flex justify-between items-start px-4 py-3">
-        <span>{{ $message }}</span>
+    <div class="flex items-start justify-between px-4 py-3">
+        <div>
+            
+            <span><strong>{{ $title }}</strong> {{ $message }}</span>
+        </div>
         <button onclick="document.getElementById('{{ $id }}').remove()"
-                class="text-white/70 hover:text-white font-bold">&times;</button>
+                class="font-bold text-white/70 hover:text-white">&times;</button>
     </div>
 
     {{-- Progress bar di bagian bawah alert --}}
@@ -37,8 +46,8 @@
 <style>
     @keyframes slide-in { 0% {opacity:0;transform:translateX(100%)} 100% {opacity:1;transform:translateX(0)} }
     @keyframes slide-out{ 0% {opacity:1;transform:translateX(0)} 100% {opacity:0;transform:translateX(100%)} }
-        .animate-slide-in { animation: slide-in 0.35s ease-out forwards }
-        .animate-slide-out { animation: slide-out 0.35s ease-in forwards }
+    .animate-slide-in { animation: slide-in 0.35s ease-out forwards }
+    .animate-slide-out { animation: slide-out 0.35s ease-in forwards }
 </style>
 @endonce
 

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<x-alert />
 <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
     <!-- Header Section -->
     <div class="flex flex-col justify-between mb-4 space-y-3 md:flex-row md:items-center md:space-y-0">

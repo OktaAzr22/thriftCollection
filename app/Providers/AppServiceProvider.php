@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
         $kategoriItems = Kategori::where('created_at', '>=', $since)->get()->map(function ($item) {
             return [
                 'type' => 'Kategori',
-                'name' => $item->nama_kategori,
+                'name' => $item->nama,
                 'time' => $item->created_at,
                 'message' => 'Kategori baru ditambahkan: ' . $item->nama_kategori,
                 'icon' => 'category',
@@ -68,9 +68,9 @@ class AppServiceProvider extends ServiceProvider
         $itemItems = Item::where('created_at', '>=', $since)->get()->map(function ($item) {
             return [
                 'type' => 'Item',
-                'name' => $item->nama_item,
+                'name' => $item->nama,
                 'time' => $item->created_at,
-                'message' => 'Item baru tersedia: ' . $item->nama_item,
+                'message' => 'Item baru tersedia: ' . $item->nama,
                 'icon' => 'item',
                 'color' => 'orange'
             ];
