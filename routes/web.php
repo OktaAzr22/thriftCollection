@@ -36,5 +36,9 @@ Route::get('/admin/print-pdf', [AdminDashboardController::class, 'downloadPDF'])
 
 
 
+Route::post('/toggle-darkmode', function () {
+    session(['dark_mode' => !session('dark_mode')]);
+    return back();
+})->name('toggle.darkmode');
 
 
