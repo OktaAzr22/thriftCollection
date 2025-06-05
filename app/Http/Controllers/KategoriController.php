@@ -34,14 +34,14 @@ class KategoriController extends Controller
                 'required',
                 'min:1',
                 'max:50',
-                'regex:/^[a-zA-Z\s]+$/',
+                
                 Rule::unique('kategoris', 'nama'),
             ],
         ], [
             'nama.required' => 'Nama kategori wajib diisi',
             'nama.min' => 'Nama kategori minimal 1 karakter',
             'nama.max' => 'Nama kategori maksimal 50 karakter',
-            'nama.regex' => 'Nama kategori hanya boleh mengandung huruf dan spasi',
+            
             'nama.unique' => 'Nama kategori sudah ada di database',
         ]);
 
@@ -61,14 +61,14 @@ public function update(Request $request, Kategori $kategori)
             'required',
             'min:1',
             'max:50',
-            'regex:/^[a-zA-Z\s]+$/',
+            
             Rule::unique('kategoris', 'nama')->ignore($kategori->id),
         ],
     ], [
         'nama.required' => 'Nama kategori wajib diisi',
         'nama.min' => 'Nama kategori minimal 1 karakter',
         'nama.max' => 'Nama kategori maksimal 50 karakter',
-        'nama.regex' => 'Nama kategori hanya boleh mengandung huruf dan spasi',
+        
         'nama.unique' => 'Nama kategori sudah ada di database',
     ]);
 

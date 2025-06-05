@@ -30,29 +30,31 @@
     .scroll-hidden {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
+   }
 
-.scroll-hidden::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-}
+   .scroll-hidden::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+   }
     
   </style>
   @stack('styles')
 </head>
-<body class="h-screen overflow-hidden font-sans bg-gray-100">
+<body class="h-screen overflow-hidden font-sans bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-[#3f3f46] via-[#71717a] to-[#d4d4d8] ">
   <div class="flex flex-col h-full">
-      <header class="flex items-center justify-between w-full px-6 py-3 bg-white shadow">
+      <header class="flex items-center justify-between w-full px-6 py-3 bg-gradient-to-r
+from-[#0f172a]
+to-[#334155] shadow">
             <div class="flex items-center gap-3">
                <button onclick="toggleSidebar()" class="text-gray-500 transition-colors hover:text-black md:hidden">
                   <i class="text-lg fas fa-bars"></i>
                </button>
-               <h1 class="text-lg font-semibold text-gray-800">Admin Master</h1>
+               <h1 class="text-lg font-semibold text-transparent bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text">Admin Master</h1>
             </div>
             <div class="flex items-center gap-4">
                <!-- Wrapper Notifikasi -->
                <div class="relative inline-block">
                   <!-- Icon Bell -->
-                  <button onclick="toggleNotif()" class="relative text-xl text-gray-700 hover:text-black focus:outline-none">
+                  <button onclick="toggleNotif()" class="relative text-xl text-gray-100 hover:text-black focus:outline-none">
                      <i class="fas fa-bell"></i>
                      @if($totalNotifications > 0)
                         <span class="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-2 -right-2">
@@ -61,7 +63,7 @@
                      @endif
                   </button>
                   <!-- Card Riwayat Notif -->
-                  <div id="notifCard" class="absolute right-0 z-50 mt-3 transition-all duration-300 transform scale-95 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 pointer-events-none w-72">
+                  <div id="notifCard" class="absolute right-0 z-50 mt-3 transition-all duration-300 transform scale-95 bg-gradient-to-r from-[#d1d5db] via-[#6b7280] to-[#374151] border border-gray-200 rounded-lg shadow-lg opacity-0 pointer-events-none w-72">
                      <div class="p-4 font-semibold text-gray-700 border-b">Riwayat Notifikasi</div>
                      <!-- Konten scrollable -->
                      <div class="overflow-y-auto max-h-60">

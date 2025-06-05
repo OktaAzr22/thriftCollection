@@ -42,7 +42,7 @@ class BrandController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('brands.index')->with('success_swal', 'Barang berhasil ditambahkan!');
+        return redirect()->route('brands.index')->with('success_swal', 'Brand berhasil ditambahkan!');
     }
 
     public function update(Request $request, Brand $brand) {

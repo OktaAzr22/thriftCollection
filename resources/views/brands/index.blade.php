@@ -3,7 +3,7 @@
 @section('content')
 <x-alert />
     {{-- sec 1 --}}
-    <div class="p-6 mb-6 bg-white rounded-lg shadow">
+    <div class="p-6 mb-6 bg-white rounded-lg shadow-xl/30">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-bold">Tambah Brand</h2>
             <button id="toggleFormBtn" onclick="toggleForm()"
@@ -28,7 +28,7 @@
                     <input type="file" id="image" name="image" accept="image/*" class="block w-full text-sm text-gray-500 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
                 </div>           
                 <div class="md:col-span-2">
-                    <button type="submit" class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">
+                    <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-green-700">
                         Submit
                     </button>
                 </div>
