@@ -1,13 +1,11 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // ⬅️ ini WAJIB
+  darkMode: 'class',
   content: [
-    "./resources/**/*.blade.php",
-    "./resources/**/*.js",
-    "./resources/**/*.vue",
+    './resources/views/**/*.blade.php',
+    './resources/js/**/*.js',
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};

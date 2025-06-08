@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="{{ session('dark_mode') ? 'dark' : '' }}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Modern Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  @vite(['resources/css/app.css'])
   <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     .sidebar {
@@ -39,9 +39,9 @@
   </style>
   @stack('styles')
 </head>
-<body class="h-screen overflow-hidden font-sans bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-[#3f3f46] via-[#71717a] to-[#d4d4d8] ">
+<body class="h-screen overflow-hidden font-sans transition-colors duration-500 bg-amber-700 dark:bg-indigo-400 ">
   <div class="flex flex-col h-full">
-      <header class="flex items-center justify-between w-full px-6 py-3 bg-gradient-to-r
+      <header class="flex items-center justify-between w-full px-6 py-3 bg-amber-300 dark:bg-gradient-to-r
 from-[#0f172a]
 to-[#334155] shadow">
             <div class="flex items-center gap-3">

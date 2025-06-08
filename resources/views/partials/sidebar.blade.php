@@ -31,6 +31,11 @@
                <i class="w-5 text-center fas fa-box"></i>
                <span class="sidebar-text whitespace-nowrap">Item</span>
             </a>
+            <form action="{{ route('toggle-dark-mode') }}" method="GET">
+      <button class="flex items-center h-8 p-1 duration-300 bg-gray-300 rounded-full dark:bg-yellow-400 w-14 focus:outline-none">
+        <div class="{{ session('dark_mode') ? 'translate-x-6 bg-yellow-400' : 'translate-x-0 bg-gray-800' }} w-6 h-6 rounded-full shadow-md transform duration-300"></div>
+      </button>
+    </form>
            
             </details>
         </li>
