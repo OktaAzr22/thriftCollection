@@ -138,7 +138,7 @@
                 
                 <!-- Edit Modal for each brand -->
                 <div id="modal-{{ $brand->id }}" role="dialog" aria-modal="true"
-                     class="fixed inset-0 z-50 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-50 opacity-0 pointer-events-none">
+                     class="fixed inset-0 z-50 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-50 opacity-0 pointer-events-none dark:text-amber-600">
                     <div class="relative w-full max-w-md p-6 transition-transform duration-300 transform scale-95 bg-white rounded-lg shadow-lg sm:p-8">
                         <button onclick="closeModal('{{ $brand->id }}')" 
                                 class="absolute text-gray-400 top-4 right-4 hover:text-gray-500">
