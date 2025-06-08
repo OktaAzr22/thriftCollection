@@ -55,7 +55,7 @@
                 </svg>
             </div>
             <input type="text" id="nama" name="nama"
-                   class="w-full pl-10 pr-3 py-2 text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('nama') border-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
+                   class="w-full pl-10 pr-3 py-2 text-gray-700 border  rounded-lg focus:ring-2   @error('nama') border-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
                    placeholder="Contoh: Elektronik"
                    value="{{ old('nama', isset($kategori) ? $kategori->nama : '') }}">
         </div>
@@ -87,7 +87,7 @@
         </div>
 
         <!-- List Card -->
-        <div class="overflow-hidden bg-white shadow-sm rounded-xl hover-scale">
+        <div class="overflow-hidden bg-white shadow-sm dark:bg-red-500 rounded-xl hover-scale " >
             <div class="px-6 py-4 card-gradient-header">
                 <h2 class="text-lg font-medium text-white">
                     <svg class="inline w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -170,6 +170,7 @@
                 @endif
             </div>
         </div>
+        
     </div>
 </div>
 @endsection

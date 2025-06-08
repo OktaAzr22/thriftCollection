@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-         <div class="flex flex-col h-full px-2 py-4 bg-white shadow-md sidebar">
+         <div class="flex flex-col h-full px-2 py-4 bg-white shadow-md sidebar dark:bg-gray-900 dark:text-white">
             <div class="flex items-center justify-between px-3 mb-6">
             <h2 class="text-lg font-bold sidebar-text whitespace-nowrap">MyApp</h2>
             <button onclick="toggleSidebar()" class="text-gray-500 transition-colors hover:text-black">
@@ -31,11 +31,7 @@
                <i class="w-5 text-center fas fa-box"></i>
                <span class="sidebar-text whitespace-nowrap">Item</span>
             </a>
-            <form action="{{ route('toggle-dark-mode') }}" method="GET">
-      <button class="flex items-center h-8 p-1 duration-300 bg-gray-300 rounded-full dark:bg-yellow-400 w-14 focus:outline-none">
-        <div class="{{ session('dark_mode') ? 'translate-x-6 bg-yellow-400' : 'translate-x-0 bg-gray-800' }} w-6 h-6 rounded-full shadow-md transform duration-300"></div>
-      </button>
-    </form>
+            
            
             </details>
         </li>

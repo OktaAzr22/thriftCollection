@@ -27,14 +27,13 @@ Route::get('/admin/print-pdf', [AdminDashboardController::class, 'downloadPDF'])
 
 
 
-
-Route::get('/toggle-dark-mode', function (Request $request) {
+Route::post('/toggle-dark-mode', function (Request $request) {
     if ($request->session()->has('dark_mode')) {
-        $request->session()->forget('dark_mode'); // hapus session dark_mode => light mode
+        $request->session()->forget('dark_mode');
     } else {
-        $request->session()->put('dark_mode', true); // set session dark_mode => dark mode
+        $request->session()->put('dark_mode', true);
     }
-    return redirect()->back();
+    return response()->json(['status' => 'ok', 'dark_mode' => session('dark_mode')]);
 })->name('toggle-dark-mode');
 
 
