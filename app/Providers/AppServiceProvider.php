@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
                 'type' => 'Kategori',
                 'name' => $item->nama,
                 'time' => $item->created_at,
-                'message' => 'Kategori baru ditambahkan: ' . $item->nama_kategori,
+                'message' => 'Kategori baru ditambahkan: ' . $item->nama,
                 'icon' => 'category',
                 'color' => 'green'
             ];
