@@ -17,45 +17,39 @@ class ItemController extends Controller
      * Display a listing of the resource.
      */
    public function index(Request $request)
-{
-    $query = Item::query();
+    {
+        $query = Item::query();
 
-    // Search by nama
-    if ($request->filled('search')) {
-        $query->where('nama', 'like', '%' . $request->search . '%');
+        if ($request->filled('search')) {
+            $query->where('nama', 'like', '%' . $request->search . '%');
+        }
+
+        $allowedSorts = ['nama', 'harga', 'ongkir', 'tanggal'];
+        $sort = $request->get('sort');
+        $direction = $request->get('direction') === 'desc' ? 'desc' : 'asc';
+
+        if (in_array($sort, $allowedSorts)) {
+            $query->orderBy($sort, $direction);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $items = $query->with(['kategori', 'brand', 'toko'])
+                    ->paginate(10)
+                    ->withQueryString();
+
+        $kategori = Kategori::all();
+        $brand = Brand::all();
+        $toko = Toko::all();
+
+        return view('items.index', compact('items', 'kategori', 'brand', 'toko', 'sort', 'direction'));
     }
-
-    // Allowed columns untuk sortir
-    $allowedSorts = ['nama', 'harga', 'ongkir', 'tanggal'];
-    $sort = $request->get('sort');
-    $direction = $request->get('direction') === 'desc' ? 'desc' : 'asc';
-
-    if (in_array($sort, $allowedSorts)) {
-        $query->orderBy($sort, $direction);
-    } else {
-        $query->orderBy('created_at', 'desc'); // default
-    }
-
-    $items = $query->with(['kategori', 'brand', 'toko'])
-                   ->paginate(10)
-                   ->withQueryString();
-
-    $kategori = Kategori::all();
-    $brand = Brand::all();
-    $toko = Toko::all();
-
-    return view('items.index', compact('items', 'kategori', 'brand', 'toko', 'sort', 'direction'));
-}
-
-
-
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-         // Get necessary data for form
         $brands = Brand::all();
         $tokos = Toko::all();
         $kategoris = Kategori::all();
@@ -69,7 +63,7 @@ class ItemController extends Controller
     public function store(Request $request)
     {
          $request->validate([
-            'nama' => 'required|string|max:10',
+            'nama' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
             'ongkir' => 'nullable|numeric|min:0',
             'toko_id' => 'required|exists:tokos,id',

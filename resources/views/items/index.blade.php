@@ -3,11 +3,9 @@
 @section('content')
 <x-alert />
 <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
-    <!-- Header Section -->
     <div class="flex flex-col justify-between mb-4 space-y-3 md:flex-row md:items-center md:space-y-0">
         <h2 class="text-xl font-semibold text-gray-800">Product List</h2>
         
-        <!-- Search and Add Product -->
         <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -32,12 +30,10 @@
         </div>
     </div>
 
-    <!-- Table Section -->
     <div class="max-h-[calc(100vh-250px)] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 hover:[&::-webkit-scrollbar-thumb]:bg-gray-400">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="sticky top-0 z-10 bg-gray-50">
                 <tr>
-                    <!-- Name Column with Sort -->
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'nama', 'direction' => (request('sort') === 'nama' && request('direction') === 'asc') ? 'desc' : 'asc']) }}" class="flex items-center">
                             Name 
@@ -49,7 +45,6 @@
                         </a>
                     </th>
                     
-                    <!-- Price Column with Sort -->
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'harga', 'direction' => (request('sort') === 'harga' && request('direction') === 'asc') ? 'desc' : 'asc']) }}" class="flex items-center">
                             Price
@@ -61,7 +56,6 @@
                         </a>
                     </th>
                     
-                    <!-- Total Price Column with Sort -->
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'ongkir', 'direction' => (request('sort') === 'ongkir' && request('direction') === 'asc') ? 'desc' : 'asc']) }}" class="flex items-center">
                             Total Price
@@ -72,23 +66,19 @@
                             @endif
                         </a>
                     </th>
-                    
-                    <!-- Category Column -->
+
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         Category
                     </th>
                     
-                    <!-- Brand Column -->
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         Brand
                     </th>
-                    
-                    <!-- Store Column -->
+
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         Store
                     </th>
-                    
-                    <!-- Actions Column -->
+
                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase">
                         Actions
                     </th>
@@ -98,7 +88,6 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($items as $item)
                 <tr class="hover:bg-gray-50">
-                    <!-- Name Cell -->
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 w-10 h-10">
@@ -118,53 +107,44 @@
                             </div>
                         </div>
                     </td>
-                    
-                    <!-- Price Cell -->
+
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">Rp {{ number_format($item->harga, 0, ',', '.') }}</div>
                     </td>
-                    
-                    <!-- Total Price Cell -->
+
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-semibold text-gray-900">Rp{{ number_format($item->harga + $item->ongkir, 0, ',', '.') }}</div>
                     </td>
-                    
-                    <!-- Category Cell -->
+
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                             {{ $item->kategori->nama }}
                         </span>
                     </td>
-                    
-                    <!-- Brand Cell -->
+
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">
                             {{ $item->brand->name }}
                         </div>
                     </td>
-                    
-                    <!-- Store Cell -->
+
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">
                             {{ $item->toko->nama }}
                         </div>
                     </td>
-                    
-                    <!-- Actions Cell -->
+
                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                         <div class="flex justify-end space-x-1">
-                            <!-- View Button -->
                             <button onclick="openDrawer('drawer-view-{{ $item->id }}')" class="p-2 text-blue-600 bg-blue-100 rounded-md hover:bg-blue-200" title="View">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            
-                            <!-- Edit Button -->
+
                             <button onclick="openDrawer('drawer-edit-{{ $item->id }}')" class="p-2 text-yellow-600 bg-yellow-100 rounded-md hover:bg-yellow-200" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
                             
-                            <!-- Delete Button -->
-                           <form method="POST" action="{{ route('items.destroy', $item->id) }}" class="inline form-delete" data-jenis="item">
+                            <form method="POST" action="{{ route('items.destroy', $item->id) }}" class="inline form-delete" data-jenis="item">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-2 text-red-600 bg-red-100 rounded-md hover:bg-red-200" title="Delete">
@@ -175,12 +155,10 @@
                     </td>
                 </tr>
                 
-                <!-- Include Drawers -->
                 @include('items.partials.drawer-view', ['item' => $item])
                 @include('items.partials.drawer-edit', ['item' => $item, 'tokos' => $toko, 'brands' => $brand, 'kategoris' => $kategori])
                 
                 @empty
-                <!-- Empty State -->
                 <tr>
                     <td colspan="10" class="px-6 py-4 text-sm text-center text-gray-500">
                         No items found. <a href="{{ route('items.create') }}" class="text-blue-500 hover:text-blue-700">Add your first item</a>
@@ -191,7 +169,6 @@
         </table>
     </div>
     
-    <!-- Pagination -->
     <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 rounded-b-lg sm:px-6">
         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
@@ -248,15 +225,3 @@
     }
 </script>
 @endpush
-
-
- {{-- <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'tanggal', 'direction' => (request('sort') === 'tanggal' && request('direction') === 'asc') ? 'desc' : 'asc']) }}">
-                            Category
-                            @if(request('sort') === 'tanggal')
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
-                                </svg>
-                            @endif 
-                         </a>
-                    </th> --}}

@@ -33,14 +33,14 @@ class KategoriController extends Controller
             'nama' => [
                 'required',
                 'min:1',
-                'max:50',
+                'max:255',
                 
                 Rule::unique('kategoris', 'nama'),
             ],
         ], [
             'nama.required' => 'Nama kategori wajib diisi',
             'nama.min' => 'Nama kategori minimal 1 karakter',
-            'nama.max' => 'Nama kategori maksimal 50 karakter',
+            'nama.max' => 'Nama kategori maksimal 255 karakter',
             
             'nama.unique' => 'Nama kategori sudah ada di database',
         ]);
@@ -50,38 +50,33 @@ class KategoriController extends Controller
          return redirect()->back()->with('success_swal', 'Kategori berhasil ditambahkan');
     }
 
- 
-
-
-
-public function update(Request $request, Kategori $kategori)
-{
-    $request->validate([
-        'nama' => [
-            'required',
-            'min:1',
-            'max:50',
+    public function update(Request $request, Kategori $kategori)
+    {
+        $request->validate([
+            'nama' => [
+                'required',
+                'min:1',
+                'max:255',
+                
+                Rule::unique('kategoris', 'nama')->ignore($kategori->id),
+            ],
+        ], [
+            'nama.required' => 'Nama kategori wajib diisi',
+            'nama.min' => 'Nama kategori minimal 1 karakter',
+            'nama.max' => 'Nama kategori maksimal 255 karakter',
             
-            Rule::unique('kategoris', 'nama')->ignore($kategori->id),
-        ],
-    ], [
-        'nama.required' => 'Nama kategori wajib diisi',
-        'nama.min' => 'Nama kategori minimal 1 karakter',
-        'nama.max' => 'Nama kategori maksimal 50 karakter',
-        
-        'nama.unique' => 'Nama kategori sudah ada di database',
-    ]);
+            'nama.unique' => 'Nama kategori sudah ada di database',
+        ]);
 
-    // ✅ Simpan perubahan
-    $kategori->nama = $request->nama;
-    $kategori->save();
+        $kategori->nama = $request->nama;
+        $kategori->save();
 
-    return redirect()->back()->with('alert', [
-        'type' => 'success',
-        'message' => 'Kategori berhasil diperbarui!',
-        'timeout' => 3500,
-    ]);
-}
+        return redirect()->back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Kategori berhasil diperbarui!',
+            'timeout' => 3500,
+        ]);
+    }
 
 
 

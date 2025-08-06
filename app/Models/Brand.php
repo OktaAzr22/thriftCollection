@@ -15,7 +15,7 @@ class Brand extends Model
     {
         return $this->image
             ? asset('storage/' . $this->image)
-            : asset('images/default-brand.png');
+            : asset('images/1.png');
     }
 
     public function items()

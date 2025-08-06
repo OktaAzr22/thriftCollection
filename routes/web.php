@@ -7,10 +7,8 @@ use App\Http\Controllers\TokoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\WishlistItemController;
 use Illuminate\Http\Request;
-
-// Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
 
 Route::resource('items', ItemController::class)->except(['create', 'show']);
 route::resource('brands', BrandController::class)->except(['create','edit', 'show']);
@@ -24,7 +22,7 @@ Route::get('/items/create', [ItemController::class, 'create'])->name('items.crea
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
 Route::resource('kategori', KategoriController::class);
 Route::get('/admin/print-pdf', [AdminDashboardController::class, 'downloadPDF'])->name('admin.print-pdf');
-
+Route::resource('/wishlist', WishlistItemController::class);
 
 
 Route::post('/toggle-dark-mode', function (Request $request) {
@@ -36,5 +34,6 @@ Route::post('/toggle-dark-mode', function (Request $request) {
     return response()->json(['status' => 'ok', 'dark_mode' => session('dark_mode')]);
 })->name('toggle-dark-mode');
 
-
-
+Route::get('/dark-academia', function () {
+    return view('a');
+})->name('dark-academia');

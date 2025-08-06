@@ -2,39 +2,30 @@
 
 @section('content')
 <x-alert />
-    <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow">
+    <div class="flex flex-col flex-1 p-4 overflow-hidden bg-white rounded-lg shadow dark:bg-slate-700">
         <a href="{{ url()->previous() }}">
-                <button class="flex items-center gap-2 text-gray-600 hover:text-black">
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="text-sm font-medium">Kembali</span>
-                </button>
-            </a>
-        <!-- Progress Steps Indicator -->
+            <button class="flex items-center gap-2 text-gray-600 hover:text-black">
+                <i class="fas fa-arrow-left"></i>
+                <span class="text-sm font-medium">Kembali</span>
+            </button>
+        </a>
+
         <div class="flex justify-center mb-8">
             <div class="flex items-center">
-                <!-- Step 1 -->
                 <div class="flex flex-col items-center">
                     <div class="flex items-center justify-center w-10 h-10 font-bold text-white bg-blue-600 rounded-full">
                         1
                     </div>
                     <div class="mt-2 text-sm font-medium text-gray-700">Informasi Dasar</div>
                 </div>
-                
-                <!-- Line between steps -->
                 <div class="w-16 h-1 mx-2 bg-gray-300"></div>
-                
-                <!-- Step 2 -->
                 <div class="flex flex-col items-center">
                     <div class="flex items-center justify-center w-10 h-10 font-bold text-gray-600 bg-gray-300 rounded-full">
                         2
                     </div>
                     <div class="mt-2 text-sm font-medium text-gray-500">Detail Item</div>
                 </div>
-                
-                <!-- Line between steps -->
                 <div class="w-16 h-1 mx-2 bg-gray-300"></div>
-                
-                <!-- Step 3 -->
                 <div class="flex flex-col items-center">
                     <div class="flex items-center justify-center w-10 h-10 font-bold text-gray-600 bg-gray-300 rounded-full">
                         3
@@ -45,12 +36,9 @@
         </div>
 
         <div class="flex flex-col" style="min-height: calc(100vh - 250px);">
-            <!-- Scrollable form content -->
             <div class="flex-1 overflow-y-auto">
                 <form id="multiStepForm" action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    
-                    <!-- Step 1 -->
                     <div class="step" id="step1">
                         <h2 class="mb-6 text-xl font-bold text-gray-800">Informasi Dasar</h2>
                         
@@ -59,7 +47,7 @@
                             <input type="text" id="nama" name="nama" 
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                                    placeholder="Masukkan Nama Item (maks 10 karakter)"
-                                   maxlength="10"
+                                   maxlength="255"
                                    value="{{ old('nama') }}">
                             <p id="error-nama" class="hidden mt-1 text-sm text-red-600"></p>
                         </div>
@@ -83,10 +71,8 @@
                         </div>
                     </div>
                     
-                    <!-- Step 2 -->
                     <div class="hidden step" id="step2">
-                        <h2 class="mb-6 text-xl font-bold text-gray-800">Detail Item</h2>
-                        
+                        <h2 class="mb-6 text-xl font-bold text-gray-800">Detail Item</h2>   
                         <div class="mb-4">
                             <label for="brand_id" class="block mb-1 text-sm font-medium text-gray-700">Brand*</label>
                             <select id="brand_id" name="brand_id" 
@@ -137,44 +123,37 @@
                         </div>
                     </div>
                     
-                    <!-- Step 3 -->
                     <div class="hidden step" id="step3">
                        <h2 class="mb-6 text-xl font-bold text-gray-800">Upload Gambar</h2>
-                       
-                       <!-- Container untuk Upload dan Preview Gambar -->
                        <div class="flex items-center gap-4 mb-4">
-                          <!-- Area Upload (3/4 width) -->
                           <div class="w-3/4">
-                                <label for="gambar" class="block mb-1 text-sm font-medium text-gray-700">Upload Gambar Item (Maks 2MB)</label>
-                                <label class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                   <div class="flex flex-col items-center justify-center px-4 pt-5 pb-6 text-center">
-                                      <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                                      </svg>
-                                      <p class="mb-2 text-sm text-gray-500">
-                                            <span class="font-semibold">Klik untuk upload</span><br>
-                                            atau drag & drop gambar di sini
-                                      </p>
-                                      <p class="text-xs text-gray-500">
-                                            Format: PNG, JPG, JPEG<br>
-                                            Ukuran maks: 2MB
-                                      </p>
-                                   </div>
-                                   <input id="gambar" name="gambar" type="file" class="hidden" accept="image/*" />
-                                </label>
-                                <p id="error-gambar" class="hidden mt-1 text-sm text-red-600"></p>
+                            <label for="gambar" class="block mb-1 text-sm font-medium text-gray-700">Upload Gambar Item (Maks 2MB)</label>
+                            <label class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center px-4 pt-5 pb-6 text-center">
+                                    <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                    </svg>
+                                    <p class="mb-2 text-sm text-gray-500">
+                                        <span class="font-semibold">Klik untuk upload</span><br>atau drag & drop gambar di sini
+                                    </p>
+                                    <p class="text-xs text-gray-500">
+                                        Format: PNG, JPG, JPEG<br>Ukuran maks: 2MB
+                                    </p>
+                                </div>
+                                <input id="gambar" name="gambar" type="file" class="hidden" accept="image/*" />
+                            </label>
+                            <p id="error-gambar" class="hidden mt-1 text-sm text-red-600"></p>
                           </div>
                           
-                          <!-- Area Preview (1/4 width) -->
                           <div class="flex justify-center w-1/4">
-                                <div class="relative">
-                                   <img id="preview-image" class="hidden max-w-full rounded max-h-48" src="#" alt="Preview Gambar Item" />
-                                   <button type="button" id="remove-image" class="absolute top-0 right-0 hidden p-1 text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full hover:bg-red-600">
-                                      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                      </svg>
-                                   </button>
-                                </div>
+                            <div class="relative">
+                                <img id="preview-image" class="hidden max-w-full rounded max-h-48" src="#" alt="Preview Gambar Item" />
+                                <button type="button" id="remove-image" class="absolute top-0 right-0 hidden p-1 text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full hover:bg-red-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
                           </div>
                        </div>
 
@@ -189,7 +168,6 @@
                 </form>
             </div>
             
-            <!-- Fixed navigation buttons -->
             <div class="sticky bottom-0 left-0 right-0 p-4 mt-auto bg-white border-t">
                 <div class="flex items-center justify-between">
                     <button type="button" id="backButton" onclick="handleBackButton()" 
@@ -287,8 +265,8 @@
                 if (!nama.value) {
                     showError(nama, 'error-nama', 'Nama item wajib diisi');
                     isValid = false;
-                } else if (nama.value.length > 10) {
-                    showError(nama, 'error-nama', 'Nama item maksimal 10 karakter');
+                } else if (nama.value.length > 255) {
+                    showError(nama, 'error-nama', 'Nama item maksimal 255 karakter');
                     isValid = false;
                 }
                 

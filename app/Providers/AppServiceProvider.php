@@ -77,11 +77,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Gabungkan semua notifikasi
-        $allNotifications = $brandItems->merge($kategoriItems)
-                            ->merge($tokoItems)
-                            ->merge($itemItems)
-                            ->sortByDesc('time')
-                            ->values();
+        $allNotifications = collect($brandItems)
+            ->merge($kategoriItems)
+            ->merge($tokoItems)
+            ->merge($itemItems)
+            ->sortByDesc('time')
+            ->values();
 
         $view->with('allNotifications', $allNotifications);
         $view->with('totalNotifications', $allNotifications->count());

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Minimalis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        secondary: '#1e293b',
+                        light: '#f8fafc',
+                        dark: '#0f172a',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                        danger: '#ef4444',
+                        info: '#06b6d4'
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+                        'card': '0 2px 12px rgba(0, 0, 0, 0.03)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .sidebar-item:hover {
+            background: linear-gradient(90deg, rgba(79, 70, 229, 0.1) 0%, rgba(79, 70, 229, 0) 100%);
+            border-left: 3px solid #4f46e5;
+        }
+        
+        .active-sidebar {
+            background: linear-gradient(90deg, rgba(79, 70, 229, 0.1) 0%, rgba(79, 70, 229, 0) 100%);
+            border-left: 3px solid #4f46e5;
+            color: #4f46e5;
+        }
+        
+        .toggle-checkbox:checked {
+            @apply: right-0 border-primary;
+        }
+        
+        .toggle-checkbox:checked + .toggle-label {
+            @apply: bg-primary;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Layout Utama -->
+    <div class="flex min-h-screen">
+        <!-- Sidebar Minimalis -->
+        <div class="z-10 w-64 bg-white shadow-lg">
+            <div class="p-6 border-b border-gray-100">
+                <h1 class="flex items-center text-xl font-bold text-primary">
+                    <i class="mr-2 fas fa-chart-pie"></i> ElegantAdmin
+                </h1>
+            </div>
+            <nav class="px-3 mt-6">
+                <a href="#" class="flex items-center px-4 py-3 mb-1 text-sm font-medium rounded-r-lg sidebar-item active-sidebar">
+                    <i class="mr-3 fas fa-home text-primary"></i> Dashboard
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 mb-1 text-sm font-medium text-gray-600 rounded-r-lg sidebar-item">
+                    <i class="mr-3 fas fa-users"></i> Pengguna
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 mb-1 text-sm font-medium text-gray-600 rounded-r-lg sidebar-item">
+                    <i class="mr-3 fas fa-box"></i> Produk
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 mb-1 text-sm font-medium text-gray-600 rounded-r-lg sidebar-item">
+                    <i class="mr-3 fas fa-shopping-cart"></i> Pesanan
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 mb-1 text-sm font-medium text-gray-600 rounded-r-lg sidebar-item">
+                    <i class="mr-3 fas fa-chart-line"></i> Analitik
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 mb-1 text-sm font-medium text-gray-600 rounded-r-lg sidebar-item">
+                    <i class="mr-3 fas fa-cog"></i> Pengaturan
+                </a>
+            </nav>
+            <div class="absolute bottom-0 w-64 p-4 bg-white border-t border-gray-100">
+                <div class="flex items-center">
+                    <div class="p-2 rounded-lg bg-primary bg-opacity-10">
+                        <i class="text-xl fas fa-user-circle text-primary"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium">Admin User</p>
+                        <p class="text-xs text-gray-500">admin@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Konten Utama -->
+        <div class="flex-1">
+            <!-- Header Minimalis -->
+            <header class="flex items-center justify-between px-8 py-4 bg-white border-b border-gray-100">
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800">Dashboard</h2>
+                    <nav class="flex mt-1 text-sm text-gray-500">
+                        <a href="#" class="transition hover:text-primary">Home</a>
+                        <span class="mx-2">/</span>
+                        <a href="#" class="transition hover:text-primary">Admin</a>
+                        <span class="mx-2">/</span>
+                        <span class="text-primary">Dashboard</span>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-5">
+                    <div class="relative">
+                        <input type="text" placeholder="Cari..." 
+                               class="w-64 py-2 pl-10 pr-4 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent">
+                        <i class="absolute text-gray-400 fas fa-search left-3 top-3"></i>
+                    </div>
+                    <button class="relative p-2 text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <div class="relative">
+                        <button class="flex items-center text-gray-700">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary bg-opacity-10">
+                                <i class="fas fa-user text-primary"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="p-8">
+                <!-- Card Statistik Minimalis -->
+                <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
+                    <div class="p-5 bg-white border border-gray-100 rounded-xl shadow-card">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="mb-1 text-sm text-gray-500">Total Pengunjung</p>
+                                <h3 class="text-2xl font-bold text-gray-800">24.8K</h3>
+                            </div>
+                            <div class="p-3 bg-blue-100 rounded-lg text-primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="px-2 py-1 text-xs font-medium bg-green-100 rounded text-success">
+                                <i class="mr-1 fas fa-arrow-up"></i> 18.2%
+                            </span>
+                            <span class="ml-2 text-xs text-gray-500">dari bulan lalu</span>
+                        </div>
+                    </div>
+                    <div class="p-5 bg-white border border-gray-100 rounded-xl shadow-card">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="mb-1 text-sm text-gray-500">Pendapatan</p>
+                                <h3 class="text-2xl font-bold text-gray-800">$12.4K</h3>
+                            </div>
+                            <div class="p-3 bg-green-100 rounded-lg text-success">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="px-2 py-1 text-xs font-medium bg-green-100 rounded text-success">
+                                <i class="mr-1 fas fa-arrow-up"></i> 8.7%
+                            </span>
+                            <span class="ml-2 text-xs text-gray-500">dari bulan lalu</span>
+                        </div>
+                    </div>
+                    <div class="p-5 bg-white border border-gray-100 rounded-xl shadow-card">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="mb-1 text-sm text-gray-500">Pesanan Baru</p>
+                                <h3 class="text-2xl font-bold text-gray-800">324</h3>
+                            </div>
+                            <div class="p-3 rounded-lg bg-amber-100 text-warning">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="px-2 py-1 text-xs font-medium bg-red-100 rounded text-danger">
+                                <i class="mr-1 fas fa-arrow-down"></i> 2.1%
+                            </span>
+                            <span class="ml-2 text-xs text-gray-500">dari bulan lalu</span>
+                        </div>
+                    </div>
+                    <div class="p-5 bg-white border border-gray-100 rounded-xl shadow-card">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="mb-1 text-sm text-gray-500">Konversi</p>
+                                <h3 class="text-2xl font-bold text-gray-800">4.8%</h3>
+                            </div>
+                            <div class="p-3 rounded-lg bg-cyan-100 text-info">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="px-2 py-1 text-xs font-medium bg-green-100 rounded text-success">
+                                <i class="mr-1 fas fa-arrow-up"></i> 1.3%
+                            </span>
+                            <span class="ml-2 text-xs text-gray-500">dari bulan lalu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form dan Tabel Section -->
+                <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                    <!-- Form Section -->
+                    <div class="lg:col-span-1">
+                        <div class="p-6 bg-white border border-gray-100 rounded-xl shadow-card">
+                            <h3 class="mb-5 text-lg font-semibold text-gray-800">Tambah Pengguna</h3>
+                            <form class="space-y-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-medium text-gray-700">Nama Lengkap</label>
+                                    <input type="text" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary text-sm">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-medium text-gray-700">Email</label>
+                                    <input type="email" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary text-sm">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-medium text-gray-700">Peran</label>
+                                    <select class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary text-sm bg-white">
+                                        <option>Admin</option>
+                                        <option>Editor</option>
+                                        <option>Viewer</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between pt-2">
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium text-gray-700">Status Aktif</label>
+                                        <div class="flex items-center">
+                                            <!-- Toggle Switch Minimalis -->
+                                            <div class="relative inline-block w-12 h-6 mr-3">
+                                                <input type="checkbox" class="hidden toggle-checkbox" id="toggle">
+                                                <label for="toggle" class="block w-12 h-6 transition bg-gray-200 rounded-full cursor-pointer toggle-label"></label>
+                                            </div>
+                                            <span class="text-sm text-gray-600">Aktif</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition">
+                                        Simpan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Tabel Section -->
+                    <div class="lg:col-span-2">
+                        <div class="overflow-hidden bg-white border border-gray-100 rounded-xl shadow-card">
+                            <!-- Tabel Header -->
+                            <div class="flex flex-col items-start justify-between p-5 border-b border-gray-100 md:flex-row md:items-center">
+                                <h3 class="text-lg font-semibold text-gray-800">Daftar Pengguna</h3>
+                                <div class="flex mt-3 space-x-3 md:mt-0">
+                                    <div class="relative">
+                                        <select class="block appearance-none w-full bg-white border border-gray-200 text-gray-600 py-2.5 px-4 pr-8 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+                                            <option>Semua Peran</option>
+                                            <option>Admin</option>
+                                            <option>Editor</option>
+                                            <option>Viewer</option>
+                                        </select>
+                                        <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-400 pointer-events-none">
+                                            <i class="text-xs fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition flex items-center">
+                                        <i class="mr-2 fas fa-plus"></i> Tambah
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Tabel Minimalis -->
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Pengguna</th>
+                                            <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Peran</th>
+                                            <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Status</th>
+                                            <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-100">
+                                        <tr class="transition hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl" />
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">Alex Morgan</div>
+                                                        <div class="text-xs text-gray-500">alex@example.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-blue-100 text-primary rounded-full">Admin</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <button class="mr-3 text-primary hover:text-indigo-700">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-gray-500 hover:text-gray-700">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="transition hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl" />
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">Taylor Swift</div>
+                                                        <div class="text-xs text-gray-500">taylor@example.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-amber-100 text-warning rounded-full">Editor</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <button class="mr-3 text-primary hover:text-indigo-700">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-gray-500 hover:text-gray-700">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="transition hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl" />
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">John Doe</div>
+                                                        <div class="text-xs text-gray-500">john@example.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">Viewer</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">Nonaktif</span>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <button class="mr-3 text-primary hover:text-indigo-700">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-gray-500 hover:text-gray-700">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="transition hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl" />
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">Emma Watson</div>
+                                                        <div class="text-xs text-gray-500">emma@example.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-amber-100 text-warning rounded-full">Editor</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                                <button class="mr-3 text-primary hover:text-indigo-700">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-gray-500 hover:text-gray-700">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Pagination Minimalis -->
+                            <div class="flex flex-col items-center justify-between px-5 py-4 bg-white border-t border-gray-100 md:flex-row">
+                                <div class="mb-4 text-sm text-gray-500 md:mb-0">
+                                    Menampilkan <span class="font-medium text-gray-700">1-4</span> dari <span class="font-medium text-gray-700">24</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100">
+                                        <i class="text-xs fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="w-8 h-8 mx-1 text-sm text-white rounded-lg bg-primary">1</button>
+                                    <button class="w-8 h-8 mx-1 text-sm text-gray-700 rounded-lg hover:bg-gray-100">2</button>
+                                    <button class="w-8 h-8 mx-1 text-sm text-gray-700 rounded-lg hover:bg-gray-100">3</button>
+                                    <button class="mx-1 text-gray-500">...</button>
+                                    <button class="w-8 h-8 mx-1 text-sm text-gray-700 rounded-lg hover:bg-gray-100">8</button>
+                                    <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100">
+                                        <i class="text-xs fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Script untuk toggle switch
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('toggle');
+            
+            toggle.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if (this.checked) {
+                    label.classList.remove('bg-gray-200');
+                    label.classList.add('bg-primary');
+                } else {
+                    label.classList.remove('bg-primary');
+                    label.classList.add('bg-gray-200');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div class="flex flex-col h-full px-2 py-4 bg-white shadow-md sidebar dark:bg-gray-950 dark:text-slate-100 ">
+<div class="flex flex-col h-full px-2 py-4 shadow-md rounded-r-xl bg-slate-200 sidebar dark:bg-gray-950 dark:text-slate-100 ">
    <div class="flex items-center justify-between px-3 mb-6">
       <h2 class="text-lg font-bold sidebar-text whitespace-nowrap">MyApp</h2>
       <button onclick="toggleSidebar()" class="text-gray-500 transition-colors hover:text-black dark:text-slate-300 dark:hover:text-white">
