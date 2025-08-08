@@ -1,16 +1,7 @@
-
-
-
-
 @extends('layouts.app')
 
 @section('content')
 <x-alert />
-
-<!-- Global Error Display -->
-
-
-<!-- Form Tambah Toko -->
 <div class="p-6 mb-6 bg-white rounded-lg shadow">
     <div class="flex items-center justify-between mb-4">
         <h2 class="text-xl font-bold">Tambah Toko</h2>

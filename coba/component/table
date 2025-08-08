@@ -1,0 +1,263 @@
+<!-- Tabel Pengguna -->
+            <div class="mt-8">
+                <div class="overflow-hidden bg-white border border-gray-100 rounded-xl shadow-card" 
+                        style="max-height: 500px; display: flex; flex-direction: column;">
+                    <div class="flex flex-col items-start justify-between p-6 border-b border-gray-100 md:flex-row md:items-center">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">Daftar Item Terbaru</h3>
+                            <p class="mt-1 text-sm text-gray-500">Collection item terbaruz</p>
+                        </div>
+                        <div class="flex mt-4 space-x-3 md:mt-0">
+                            <div class="relative">
+                                <select class="block appearance-none w-full bg-white border border-gray-200 text-gray-600 py-2.5 px-4 pr-8 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+                                    <option>Semua Status</option>
+                                    <option>Aktif</option>
+                                    <option>Nonaktif</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-400 pointer-events-none">
+                                    <i class="text-xs fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <button class="bg-primary hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center">
+                                <i class="mr-2 fas fa-plus"></i> Pengguna Baru
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tabel -->
+                    <div class="overflow-x-auto" style="overflow-y: auto; flex-grow: 1;">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="sticky top-0 z-10 border-b border-gray-200 bg-gray-50 dark:border-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Pengguna</th>
+                                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Tanggal Bergabung</th>
+                                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-100">
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Alex Morgan</div>
+                                                <div class="text-xs text-gray-500">alex@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        12 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Alex Morgan</div>
+                                                <div class="text-xs text-gray-500">alex@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        12 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Alex Morgan</div>
+                                                <div class="text-xs text-gray-500">alex@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        12 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Alex Morgan</div>
+                                                <div class="text-xs text-gray-500">alex@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        12 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Alex Morgan</div>
+                                                <div class="text-xs text-gray-500">alex@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        12 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Taylor Swift</div>
+                                                <div class="text-xs text-gray-500">taylor@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        11 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">John Doe</div>
+                                                <div class="text-xs text-gray-500">john@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        10 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">Nonaktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-gray-200 border-2 border-dashed rounded-xl"></div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Emma Watson</div>
+                                                <div class="text-xs text-gray-500">emma@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        9 Mei 2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-success rounded-full">Aktif</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <button class="mr-3 text-primary hover:text-indigo-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="flex flex-col items-center justify-between px-6 py-4 bg-white border-t border-gray-100 md:flex-row">
+                        <div class="mb-4 text-sm text-gray-500 md:mb-0">
+                            Menampilkan <span class="font-medium text-gray-700">1-4</span> dari <span class="font-medium text-gray-700">24</span>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100">
+                                <i class="text-xs fas fa-chevron-left"></i>
+                            </button>
+                            <button class="w-8 h-8 mx-1 text-sm text-white rounded-lg bg-primary">1</button>
+                            <button class="w-8 h-8 mx-1 text-sm text-gray-700 rounded-lg hover:bg-gray-100">2</button>
+                            <button class="w-8 h-8 mx-1 text-sm text-gray-700 rounded-lg hover:bg-gray-100">3</button>
+                            <button class="mx-1 text-gray-500">...</button>
+                            <button class="w-8 h-8 mx-1 text-sm text-gray-700 rounded-lg hover:bg-gray-100">8</button>
+                            <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100">
+                                <i class="text-xs fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
